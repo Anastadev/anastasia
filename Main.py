@@ -22,8 +22,9 @@ updater = Updater(token='281531409:AAF513XUt-FB_jv9eIxd0SSImg-BbMLeXkw')
 dispatcher = updater.dispatcher
 
 file = open('/home/metaheavens/bot_telegram/emploi_du_temps/ade.ics', 'rb')
-lastUpdate = datetime.datetime.utcnow()
+lastUpdate = datetime.datetime.min
 cal = Calendar.from_ical(file.read())
+file.seek(0)
 
 
 def refresh_cal():
@@ -32,6 +33,7 @@ def refresh_cal():
     global cal
     global file
     cal = Calendar.from_ical(file.read())
+    file.seek(0)
 
 
 def give_room(bot, update):
@@ -39,7 +41,7 @@ def give_room(bot, update):
     log.info("Give the room")
     global lastUpdate
     global cal
-    if datetime.datetime.utcnow() - timedelta(hours=2) > lastUpdate:
+    if datetime.datetime.utcnow() - timedelta(hours=3) > lastUpdate:
         refresh_cal()
         lastUpdate = datetime.datetime.utcnow()
     min_diff = sys.maxsize

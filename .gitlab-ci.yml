@@ -2,4 +2,5 @@ before_script:
  - touch /home/anastasia/test.test
 
 job1:
- - echo coucou
+ script:
+  - echo coucou

@@ -29,6 +29,7 @@ def refresh_cal():
     global log
     log.info("Refreshing calendar.")
     global cal
+    global file
     cal = Calendar.from_ical(file.read())
 
 

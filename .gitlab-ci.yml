@@ -1,6 +1,4 @@
-before_script:
- - touch /home/anastasia/test.test
-
 job1:
  script:
-  - echo coucou
+  - cd /home/anastasia
+  - git clone http://anastasia-imag.epac.to/telegram/anastasia.git

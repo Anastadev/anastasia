@@ -1,6 +1,5 @@
-# Anastasia
-## Intro
-Bienvenue sur le gitLab d'Anastasia, le bot pour les Imag Alternants.
-Fonctionne sur Telegram
+#Anastasia
 
-Envie de participer ? rejoignez-nous : TODO : Add link
+##Telegram
+
+Pour ceux qui sont intéressés par le développement d'Anastasia, vous pouvez rejoindre la discussion Telegram associée: https://telegram.me/joinchat/CBKa1ggoTRMEkyZTJpsTxg

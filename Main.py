@@ -7,6 +7,7 @@ import time
 import sys
 from math import fabs
 import logging
+import re
 
 # Log system
 log = logging.getLogger()
@@ -51,7 +52,11 @@ def give_room(bot, update):
         if t1 < t2 and fabs(t2 - t1) < min_diff:
             min_diff = t2 - t1
             mine = e
-    bot.sendMessage(chat_id=update.message.chat_id, text=(mine["SUMMARY"] + "\n" + mine["LOCATION"]))
+    location = mine["LOCATION"]
+    regex = r"[A-Z][0-9]{3}( |$)"
+    if re.match(regex, location) is not None:
+        location = location[:4]
+    bot.sendMessage(chat_id=update.message.chat_id, text=(mine["SUMMARY"] + "\n" + location))
 
 
 start_handler = CommandHandler('room', give_room)

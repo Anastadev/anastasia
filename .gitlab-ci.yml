@@ -1,6 +1,9 @@
 job1:
  script:
-  - cd /home/anastasia
-  - git clone http://anastasia:anastasia@anastasia-imag.epac.to/telegram/anastasia.git
-  - anastasia
-  - anastasia
+  - cd /home/anastasia/anastasia
+  - git pull
+  - pip install -r requirements.txt
+  - screen -X -S anastasia quit
+  - screen -S anastasia
+  - cd /home/anastasia/anastasia
+  - python3 Main.py

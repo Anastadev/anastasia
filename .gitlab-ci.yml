@@ -4,6 +4,4 @@ job1:
   - git pull
   - pip install -r requirements.txt
   - screen -X -S anastasia quit
-  - screen -S anastasia
-  - cd /home/anastasia/anastasia
-  - python3 Main.py
+  - screen -d -m -S anastasia python3 Main.py

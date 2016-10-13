@@ -19,3 +19,7 @@ Tous les pushs sur dev sont automatiquement déployés sur Anastasia Bêta, acce
 - Rejoingez la conversation Telegram pour qu'on discute entre nous.
 - N'implémentez pas de fonctions trop inutiles ou qui risqueraient de spamer les discussions.
 - Amusez vous :D
+
+## Librairies utilisées
+
+Pour le lien avec Telegram, voilà le lien du projet utilisé: https://github.com/python-telegram-bot/python-telegram-bot

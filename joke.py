@@ -1,6 +1,4 @@
 #!/usr/bin/env python3
-import sys
-import time
 import urllib.request
 import re
 from bs4 import BeautifulSoup

@@ -1,7 +1,19 @@
-job1:
+masterjob:
+ only:
+  - master
  script:
   - cd /home/anastasia/anastasia
   - git pull
   - pip install -r requirements.txt
   - screen -X -S anastasia quit
   - screen -d -m -S anastasia python3 Main.py
+
+devjob:
+ only:
+  - dev
+ script:
+  - cd /home/anastasia/anastasia-dev
+  - git pull
+  - pip install -r requirements.txt
+  - screen -X -S anastasia-dev quit
+  - screen -d -m -S anastasia-dev python3 Main.py

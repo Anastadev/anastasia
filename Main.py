@@ -17,7 +17,12 @@ steam_handler.setLevel(logging.DEBUG)
 steam_handler.setFormatter(formatter)
 log.addHandler(steam_handler)
 
+#MASTER KEY
 updater = Updater(token='281531409:AAF513XUt-FB_jv9eIxd0SSImg-BbMLeXkw')
+
+#DEV KEY
+#updater = Updater(token='264517660:AAHvQbyH5VygrJ_hhp1_IhFLcUeZP6iqPVI')
+
 dispatcher = updater.dispatcher
 
 file = open('/home/metaheavens/bot_telegram/emploi_du_temps/ade.ics', 'rb')

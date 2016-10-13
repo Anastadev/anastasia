@@ -22,10 +22,10 @@ steam_handler.setFormatter(formatter)
 log.addHandler(steam_handler)
 
 #MASTER KEY
-updater = Updater(token='281531409:AAF513XUt-FB_jv9eIxd0SSImg-BbMLeXkw')
+#updater = Updater(token='281531409:AAF513XUt-FB_jv9eIxd0SSImg-BbMLeXkw')
 
 #DEV KEY
-#updater = Updater(token='264517660:AAHvQbyH5VygrJ_hhp1_IhFLcUeZP6iqPVI')
+updater = Updater(token='264517660:AAHvQbyH5VygrJ_hhp1_IhFLcUeZP6iqPVI')
 
 dispatcher = updater.dispatcher
 
@@ -70,7 +70,7 @@ def give_room(bot, update):
             min_diff = t2 - t1
             mine = e
     location = mine["LOCATION"]
-    regex = r"[A-Z][0-9]{3}( |$)"
+    regex = r"[A-Z][0-9]{3}( |$|)"
     if re.match(regex, location) is not None:
         location = location[:4]
     bot.sendMessage(chat_id=update.message.chat_id, text=(mine["SUMMARY"] + "\n" + location + "\n" + utc_to_local(mine["DTSTART"].dt).strftime("%Y-%m-%d %H:%M")))

@@ -1,0 +1,5 @@
+Merci de push uniquement sur la branche dev
+Chaque commit doit avoir un nom précis et doit passer les tests d'intégration continue haut la main.
+
+Nous préférerions que les commits soient en priorité des résolutions d'Issues afin de maintenir une bonne stabilité.
+Les nouvelles features apportées doivent avoir été approuvées en amont.

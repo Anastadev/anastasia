@@ -50,9 +50,9 @@ def give_room(bot, update):
     min_diff = sys.maxsize
     mine = 0
     for e in cal.walk('vevent'):
-        date1 = datetime.utcnow()
+        date1 = datetime.now()
         t1 = time.mktime(date1.timetuple())
-        date2 = e["DTSTART"].dt
+        date2 = utc_to_local(e["DTSTART"].dt)
         t2 = time.mktime(date2.timetuple())
         if t1 < t2 and fabs(t2 - t1) < min_diff:
             min_diff = t2 - t1

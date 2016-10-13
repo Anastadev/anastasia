@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from icalendar import Calendar
@@ -6,7 +8,9 @@ import time
 import sys
 from math import fabs
 import logging
+import joke
 import re
+
 
 # Log system
 log = logging.getLogger()
@@ -43,6 +47,9 @@ def refresh_cal():
 def utc_to_local(utc_dt):
     return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
 
+def give_joke(bot, update):
+    bot.sendMessage(chat_id=update.message.chat_id, text=joke.retrieve_joke())
+    
 
 def give_room(bot, update):
     global log
@@ -68,7 +75,8 @@ def give_room(bot, update):
         location = location[:4]
     bot.sendMessage(chat_id=update.message.chat_id, text=(mine["SUMMARY"] + "\n" + location + "\n" + utc_to_local(mine["DTSTART"].dt).strftime("%Y-%m-%d %H:%M")))
 
-
 start_handler = CommandHandler('room', give_room)
+joke_handler = CommandHandler('joke', give_joke)
 dispatcher.add_handler(start_handler)
+dispatcher.add_handler(joke_handler)
 updater.start_polling()

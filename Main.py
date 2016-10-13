@@ -1,8 +1,7 @@
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from icalendar import Calendar
-from datetime import datetime, timedelta
-import datetime
+from datetime import datetime, timedelta, timezone
 import time
 import sys
 from math import fabs
@@ -22,7 +21,7 @@ updater = Updater(token='281531409:AAF513XUt-FB_jv9eIxd0SSImg-BbMLeXkw')
 dispatcher = updater.dispatcher
 
 file = open('/home/metaheavens/bot_telegram/emploi_du_temps/ade.ics', 'rb')
-lastUpdate = datetime.datetime.min
+lastUpdate = datetime.min
 cal = Calendar.from_ical(file.read())
 file.seek(0)
 
@@ -36,20 +35,24 @@ def refresh_cal():
     file.seek(0)
 
 
+def utc_to_local(utc_dt):
+    return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
+
+
 def give_room(bot, update):
     global log
     log.info("Give the room")
     global lastUpdate
     global cal
-    if datetime.datetime.utcnow() - timedelta(hours=3) > lastUpdate:
+    if datetime.utcnow() - timedelta(hours=3) > lastUpdate:
         refresh_cal()
-        lastUpdate = datetime.datetime.utcnow()
+        lastUpdate = datetime.utcnow()
     min_diff = sys.maxsize
     mine = 0
     for e in cal.walk('vevent'):
-        date1 = datetime.datetime.utcnow()
+        date1 = datetime.now()
         t1 = time.mktime(date1.timetuple())
-        date2 = e["DTSTART"].dt
+        date2 = utc_to_local(e["DTSTART"].dt)
         t2 = time.mktime(date2.timetuple())
         if t1 < t2 and fabs(t2 - t1) < min_diff:
             min_diff = t2 - t1
@@ -58,7 +61,7 @@ def give_room(bot, update):
     regex = r"[A-Z][0-9]{3}( |$)"
     if re.match(regex, location) is not None:
         location = location[:4]
-    bot.sendMessage(chat_id=update.message.chat_id, text=(mine["SUMMARY"] + "\n" + location + "\n" + mine["DTSTART"].dt.strftime("%Y-%m-%d %H:%M")))
+    bot.sendMessage(chat_id=update.message.chat_id, text=(mine["SUMMARY"] + "\n" + location + "\n" + utc_to_local(mine["DTSTART"].dt).strftime("%Y-%m-%d %H:%M")))
 
 
 start_handler = CommandHandler('room', give_room)

@@ -47,9 +47,14 @@ def refresh_cal():
 def utc_to_local(utc_dt):
     return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
 
+
 def give_joke(bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text=joke.retrieve_joke())
-    
+
+
+def give_blc(bot, update):
+    bot.sendMessage(chat_id=update.message.chat_id, text="On s'en bat les couilles :-)")
+
 
 def give_room(bot, update):
     global log
@@ -75,8 +80,11 @@ def give_room(bot, update):
         location = location[:4]
     bot.sendMessage(chat_id=update.message.chat_id, text=(mine["SUMMARY"] + "\n" + location + "\n" + utc_to_local(mine["DTSTART"].dt).strftime("%Y-%m-%d %H:%M")))
 
+
 start_handler = CommandHandler('room', give_room)
 joke_handler = CommandHandler('joke', give_joke)
+blc_handler = CommandHandler('blc', give_blc)
 dispatcher.add_handler(start_handler)
 dispatcher.add_handler(joke_handler)
+dispatcher.add_handler(blc_handler)
 updater.start_polling()

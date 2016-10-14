@@ -76,7 +76,7 @@ def give_room(bot, update):
     regex = r"[A-Z][0-9]{3}( |$|)"
     if re.match(regex, location) is not None:
         location = location[:4]
-    bot.sendMessage(chat_id=update.message.chat_id, text=(mine["SUMMARY"] + "\n" + location + "\n" + utc_to_local(mine["DTSTART"].dt).strftime("%A %H:%M")))
+    bot.sendMessage(chat_id=update.message.chat_id, text=(mine["SUMMARY"] + "\n" + location + "\n" + utc_to_local(mine["DTSTART"].dt).strftime("%A %H:%M").capitalize()))
 
 
 start_handler = CommandHandler('room', give_room)

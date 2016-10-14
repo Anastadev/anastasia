@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d5822a0c-1ae1-4983-8a84-e752bc60a3e8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Main.py" afterPath="$PROJECT_DIR$/Main.py" />
     </list>
     <ignored path="anastasia.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -126,7 +125,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RESET_MODE" value="SOFT" />
@@ -798,7 +797,14 @@
       <option name="project" value="LOCAL" />
       <updated>1476477022815</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Get key fixed">
+      <created>1476479607447</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1476479607447</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -878,7 +884,8 @@
     <MESSAGE value="Key changed" />
     <MESSAGE value="Launch procedure changed, keys are now on server" />
     <MESSAGE value="Merge with master" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge with master" />
+    <MESSAGE value="Get key fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Get key fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />

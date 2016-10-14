@@ -53,7 +53,7 @@ def give_joke(bot, update):
 
 
 def give_blc(bot, update):
-    bot.sendMessage(chat_id=update.message.chat_id, text="On s'en bat les couilles :-)")
+    bot.sendMessage(chat_id=update.message.chat_id, text="On s'en bat les couilles :)")
 
 
 def give_room(bot, update):

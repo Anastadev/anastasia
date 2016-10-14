@@ -21,11 +21,7 @@ steam_handler.setLevel(logging.DEBUG)
 steam_handler.setFormatter(formatter)
 log.addHandler(steam_handler)
 
-#MASTER KEY
-updater = Updater(token='281531409:AAF513XUt-FB_jv9eIxd0SSImg-BbMLeXkw')
-
-#DEV KEY
-#updater = Updater(token='264517660:AAHvQbyH5VygrJ_hhp1_IhFLcUeZP6iqPVI')
+updater = Updater(token=sys.argv[0])
 
 dispatcher = updater.dispatcher
 

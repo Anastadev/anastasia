@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d5822a0c-1ae1-4983-8a84-e752bc60a3e8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Main.py" afterPath="$PROJECT_DIR$/Main.py" />
     </list>
     <ignored path="anastasia.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state relative-caret-position="240">
+              <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
               <folding>
                 <element signature="e#24#56#0" expanded="true" />
               </folding>
@@ -41,7 +42,7 @@
       <file leaf-file-name="joke.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/joke.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
+            <state relative-caret-position="255">
               <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding>
                 <element signature="e#23#44#0" expanded="true" />
@@ -53,8 +54,8 @@
       <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="12" column="67" selection-start-line="12" selection-start-column="67" selection-end-line="12" selection-end-column="67" />
+            <state relative-caret-position="60">
+              <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -62,12 +63,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitlab-ci.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name=".gitlab-ci.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitlab-ci.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
               <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
-              <folding />
+              <folding>
+                <marker date="1476476996000" expanded="true" signature="12:28" ph="only: &lt;1 item&gt;" />
+                <marker date="1476476996000" expanded="true" signature="22:28" ph="master" />
+                <marker date="1476476996000" expanded="true" signature="42:70" ph="cd /home/a..." />
+                <marker date="1476476996000" expanded="true" signature="88:119" ph="pip instal..." />
+                <marker date="1476476996000" expanded="true" signature="124:151" ph="systemctl ..." />
+                <marker date="1476476996000" expanded="true" signature="189:221" ph="cd /home/a..." />
+                <marker date="1476476996000" expanded="true" signature="239:270" ph="pip instal..." />
+                <marker date="1476476996000" expanded="true" signature="275:306" ph="systemctl ..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -125,11 +135,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/joke.py" />
-        <option value="$PROJECT_DIR$/Main.py" />
         <option value="$PROJECT_DIR$/.gitlab-ci.yml" />
+        <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/Main.py" />
       </list>
     </option>
   </component>
@@ -781,18 +791,25 @@
       <option name="project" value="LOCAL" />
       <updated>1476476776812</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Merge with master">
+      <created>1476477022815</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1476477022815</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1173" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.4945946" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24547102" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24547102" sideWeight="0.50416666" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24547102" sideWeight="0.49791667" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24547102" sideWeight="0.49583334" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -860,7 +877,8 @@
     <MESSAGE value="Smiley improved" />
     <MESSAGE value="Key changed" />
     <MESSAGE value="Launch procedure changed, keys are now on server" />
-    <option name="LAST_COMMIT_MESSAGE" value="Launch procedure changed, keys are now on server" />
+    <MESSAGE value="Merge with master" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge with master" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -901,7 +919,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
-          <folding />
+          <folding>
+            <marker date="1476476996000" expanded="true" signature="12:28" ph="only: &lt;1 item&gt;" />
+            <marker date="1476476996000" expanded="true" signature="22:28" ph="master" />
+            <marker date="1476476996000" expanded="true" signature="42:70" ph="cd /home/a..." />
+            <marker date="1476476996000" expanded="true" signature="88:119" ph="pip instal..." />
+            <marker date="1476476996000" expanded="true" signature="124:151" ph="systemctl ..." />
+            <marker date="1476476996000" expanded="true" signature="189:221" ph="cd /home/a..." />
+            <marker date="1476476996000" expanded="true" signature="239:270" ph="pip instal..." />
+            <marker date="1476476996000" expanded="true" signature="275:306" ph="systemctl ..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -961,7 +988,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
-          <folding />
+          <folding>
+            <marker date="1476476996000" expanded="true" signature="12:28" ph="only: &lt;1 item&gt;" />
+            <marker date="1476476996000" expanded="true" signature="22:28" ph="master" />
+            <marker date="1476476996000" expanded="true" signature="42:70" ph="cd /home/a..." />
+            <marker date="1476476996000" expanded="true" signature="88:119" ph="pip instal..." />
+            <marker date="1476476996000" expanded="true" signature="124:151" ph="systemctl ..." />
+            <marker date="1476476996000" expanded="true" signature="189:221" ph="cd /home/a..." />
+            <marker date="1476476996000" expanded="true" signature="239:270" ph="pip instal..." />
+            <marker date="1476476996000" expanded="true" signature="275:306" ph="systemctl ..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1021,7 +1057,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
-          <folding />
+          <folding>
+            <marker date="1476476996000" expanded="true" signature="12:28" ph="only: &lt;1 item&gt;" />
+            <marker date="1476476996000" expanded="true" signature="22:28" ph="master" />
+            <marker date="1476476996000" expanded="true" signature="42:70" ph="cd /home/a..." />
+            <marker date="1476476996000" expanded="true" signature="88:119" ph="pip instal..." />
+            <marker date="1476476996000" expanded="true" signature="124:151" ph="systemctl ..." />
+            <marker date="1476476996000" expanded="true" signature="189:221" ph="cd /home/a..." />
+            <marker date="1476476996000" expanded="true" signature="239:270" ph="pip instal..." />
+            <marker date="1476476996000" expanded="true" signature="275:306" ph="systemctl ..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1076,10 +1121,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitlab-ci.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+          <folding>
+            <marker date="1476476996000" expanded="true" signature="12:28" ph="only: &lt;1 item&gt;" />
+            <marker date="1476476996000" expanded="true" signature="22:28" ph="master" />
+            <marker date="1476476996000" expanded="true" signature="42:70" ph="cd /home/a..." />
+            <marker date="1476476996000" expanded="true" signature="88:119" ph="pip instal..." />
+            <marker date="1476476996000" expanded="true" signature="124:151" ph="systemctl ..." />
+            <marker date="1476476996000" expanded="true" signature="189:221" ph="cd /home/a..." />
+            <marker date="1476476996000" expanded="true" signature="239:270" ph="pip instal..." />
+            <marker date="1476476996000" expanded="true" signature="275:306" ph="systemctl ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="12" column="67" selection-start-line="12" selection-start-column="67" selection-end-line="12" selection-end-column="67" />
+        <state relative-caret-position="60">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
@@ -1088,7 +1150,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/joke.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
+        <state relative-caret-position="255">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding>
             <element signature="e#23#44#0" expanded="true" />
@@ -1098,19 +1160,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        <state relative-caret-position="240">
+          <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
           <folding>
             <element signature="e#24#56#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitlab-ci.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>

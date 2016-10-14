@@ -21,7 +21,7 @@ steam_handler.setLevel(logging.DEBUG)
 steam_handler.setFormatter(formatter)
 log.addHandler(steam_handler)
 
-updater = Updater(token=sys.argv[0])
+updater = Updater(token=sys.argv[1])
 
 dispatcher = updater.dispatcher
 

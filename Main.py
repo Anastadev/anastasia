@@ -12,7 +12,7 @@ import joke
 import re
 import locale
 
-locale.setlocale(locale.LC_TIME,'')
+locale.setlocale(locale.LC_TIME,'fr_FR.UTF-8')
 
 # Log system
 log = logging.getLogger()

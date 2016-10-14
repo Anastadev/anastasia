@@ -22,10 +22,10 @@ steam_handler.setFormatter(formatter)
 log.addHandler(steam_handler)
 
 #MASTER KEY
-updater = Updater(token='281531409:AAF513XUt-FB_jv9eIxd0SSImg-BbMLeXkw')
+#updater = Updater(token='281531409:AAF513XUt-FB_jv9eIxd0SSImg-BbMLeXkw')
 
 #DEV KEY
-#updater = Updater(token='264517660:AAHvQbyH5VygrJ_hhp1_IhFLcUeZP6iqPVI')
+updater = Updater(token='264517660:AAHvQbyH5VygrJ_hhp1_IhFLcUeZP6iqPVI')
 
 dispatcher = updater.dispatcher
 
@@ -53,7 +53,7 @@ def give_joke(bot, update):
 
 
 def give_blc(bot, update):
-    bot.sendMessage(chat_id=update.message.chat_id, text="On s'en bat les couilles :)")
+    bot.sendMessage(chat_id=update.message.chat_id, text="On s'en bat les couilles ♫ ")
 
 
 def give_room(bot, update):

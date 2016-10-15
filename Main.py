@@ -28,7 +28,7 @@ updater = Updater(token=sys.argv[1])
 
 dispatcher = updater.dispatcher
 
-file = open('/home/emilien/Documents/Perso/ensimag_1aa.ics', 'rb')
+file = open('/home/metaheavens/bot_telegram/emploi_du_temps/ade.ics', 'rb')
 lastUpdate = datetime.min
 cal = Calendar.from_ical(file.read())
 file.seek(0)

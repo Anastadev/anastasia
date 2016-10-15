@@ -46,21 +46,28 @@ def refresh_cal():
 def utc_to_local(utc_dt):
     return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
 
+
 def give_todo(bot,update,args):
     if len(args) == 0:
         log.info("Give the todolist")
         bot.sendMessage(chat_id=update.message.chat_id, text=todolist.alltodolist())
     elif len(args) >= 3 and args[0] == "-a":
         try:
-            d = datetime.strptime(args[1], '%m%d%H')
-        except:
+            d = datetime.strptime(args[1], '%d%m%H')
+            y = datetime.now().year
+            if(d.month < datetime.now().month ):
+                y += 1
+            d = d.replace(year=y)
+            todolist.addTodo(d,' '.join(args[2:]))
+        except :
             log.info("bad date format")
             bot.sendMessage(chat_id=update.message.chat_id, text=todolist.usage())
             pass
             return
         log.info("Add to the todolist")
     elif len(args) == 2 and args[0] == "-d"  :
-        log.info("Delete to the todolist")
+        log.info("Delete "+args[1]+" to the todolist")
+        todolist.deleteTodo(args[1])
     else:
         log.info("Bad format command")
         bot.sendMessage(chat_id=update.message.chat_id, text=todolist.usage())

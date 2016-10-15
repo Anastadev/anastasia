@@ -1,3 +1,9 @@
+CREATE DATABASE IF NOT EXISTS todolist;
+
+CREATE USER 'todolistuser' IDENTIFIED BY 'todolistpass';
+
+GRANT ALL ON todolist.* TO 'todolistuser';
+
 DROP TABLE IF EXISTS todolist;
 
 CREATE TABLE todolist (

@@ -46,9 +46,24 @@ def refresh_cal():
 def utc_to_local(utc_dt):
     return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
 
-def give_todo(bot,update):
-    log.info("Give the todolist")
-    bot.sendMessage(chat_id=update.message.chat_id, text=todolist.alltodolist())
+def give_todo(bot,update,args):
+    if len(args) == 0:
+        log.info("Give the todolist")
+        bot.sendMessage(chat_id=update.message.chat_id, text=todolist.alltodolist())
+    elif len(args) >= 3 and args[0] == "-a":
+        try:
+            d = datetime.strptime(args[1], '%m%d%H')
+        except:
+            log.info("bad date format")
+            bot.sendMessage(chat_id=update.message.chat_id, text=todolist.usage())
+            pass
+            return
+        log.info("Add to the todolist")
+    elif len(args) == 2 and args[0] == "-d"  :
+        log.info("Delete to the todolist")
+    else:
+        log.info("Bad format command")
+        bot.sendMessage(chat_id=update.message.chat_id, text=todolist.usage())
 
 
 def give_joke(bot, update):
@@ -87,7 +102,7 @@ def give_room(bot, update):
 start_handler = CommandHandler('room', give_room)
 joke_handler = CommandHandler('joke', give_joke)
 blc_handler = CommandHandler('blc', give_blc)
-todo_handler = CommandHandler('todo',give_todo)
+todo_handler = CommandHandler('todo',give_todo,pass_args=True)
 dispatcher.add_handler(start_handler)
 dispatcher.add_handler(joke_handler)
 dispatcher.add_handler(blc_handler)

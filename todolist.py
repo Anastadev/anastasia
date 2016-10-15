@@ -8,6 +8,10 @@ cursor = mariadb_connection.cursor()
 # cursor.execute("insert into todolist(end_date,task) VALUES(%s,%s)",(time.strftime('%Y/%m/%d %H:00:00'),"test"))
 # cursor.execute("commit work")
 
+def usage():
+    return  "/todo list all todo\n" \
+            "/todo [-a %m%d%H task] add a todo\n" \
+            "/todo [-d id] delete a todo"
 
 def alltodolist():
 

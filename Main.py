@@ -9,6 +9,7 @@ import sys
 from math import fabs
 import logging
 import joke
+import todolist
 import re
 import locale
 
@@ -27,7 +28,7 @@ updater = Updater(token=sys.argv[1])
 
 dispatcher = updater.dispatcher
 
-file = open('/home/metaheavens/bot_telegram/emploi_du_temps/ade.ics', 'rb')
+file = open('/home/emilien/Documents/Perso/ensimag_1aa.ics', 'rb')
 lastUpdate = datetime.min
 cal = Calendar.from_ical(file.read())
 file.seek(0)
@@ -44,6 +45,10 @@ def refresh_cal():
 
 def utc_to_local(utc_dt):
     return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
+
+def give_todo(bot,update):
+    log.info("Give the todolist")
+    bot.sendMessage(chat_id=update.message.chat_id, text=todolist.alltodolist())
 
 
 def give_joke(bot, update):
@@ -82,7 +87,9 @@ def give_room(bot, update):
 start_handler = CommandHandler('room', give_room)
 joke_handler = CommandHandler('joke', give_joke)
 blc_handler = CommandHandler('blc', give_blc)
+todo_handler = CommandHandler('todo',give_todo)
 dispatcher.add_handler(start_handler)
 dispatcher.add_handler(joke_handler)
 dispatcher.add_handler(blc_handler)
+dispatcher.add_handler(todo_handler)
 updater.start_polling()

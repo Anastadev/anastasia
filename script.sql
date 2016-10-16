@@ -4,6 +4,8 @@ CREATE USER 'todolistuser' IDENTIFIED BY 'todolistpass';
 
 GRANT ALL ON todolist.* TO 'todolistuser';
 
+USE todolist;
+
 DROP TABLE IF EXISTS todolist;
 
 CREATE TABLE todolist (

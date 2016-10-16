@@ -4,14 +4,15 @@ from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from icalendar import Calendar
 from datetime import datetime, timedelta, timezone
-import time
 import sys
 from math import fabs
 import logging
 import joke
 import todolist
-import re
 import locale
+from eat import eat
+import re
+import time
 
 locale.setlocale(locale.LC_TIME,'fr_FR.UTF-8')
 
@@ -110,8 +111,12 @@ start_handler = CommandHandler('room', give_room)
 joke_handler = CommandHandler('joke', give_joke)
 blc_handler = CommandHandler('blc', give_blc)
 todo_handler = CommandHandler('todo',give_todo,pass_args=True)
+keskonmange_handler = CommandHandler('keskonmange',eat)
+
 dispatcher.add_handler(start_handler)
 dispatcher.add_handler(joke_handler)
 dispatcher.add_handler(blc_handler)
 dispatcher.add_handler(todo_handler)
+dispatcher.add_handler(keskonmange_handler)
+
 updater.start_polling()

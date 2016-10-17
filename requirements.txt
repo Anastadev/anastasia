@@ -1,3 +1,6 @@
 python-telegram-bot
 icalendar
 beautifulsoup4
+mysqlclient
+mysql-connector-python-rf
+requests

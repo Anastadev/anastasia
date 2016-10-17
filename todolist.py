@@ -16,9 +16,9 @@ def cleanList():
     cursor.execute("COMMIT WORK")
 
 
-def alltodolist():
+def alltodolist(chat_id):
     cleanList()
-    cursor.execute("SELECT id, end_date, task FROM todolist ORDER BY end_date")
+    cursor.execute("SELECT id, end_date, task FROM todolist WHERE chat_id = %s ORDER BY end_date",(chat_id,))
     string = ""
 
     for id, end_date, task in cursor:
@@ -27,11 +27,11 @@ def alltodolist():
     return string
 
 
-def deleteTodo(id):
-    cursor.execute("DELETE FROM todolist WHERE id = %s", (id,))
+def deleteTodo(chat_id,id):
+    cursor.execute("DELETE FROM todolist WHERE id = %s AND chat_id = %s", (id,chat_id))
     cursor.execute("COMMIT WORK")
 
 
-def addTodo(date, task):
-    cursor.execute("INSERT INTO todolist(end_date,task) VALUES(%s,%s)", (date, task))
+def addTodo(chat_id,date, task):
+    cursor.execute("INSERT INTO todolist(chat_id,end_date,task) VALUES(%s,%s,%s)", (chat_id,date, task))
     cursor.execute("commit work")

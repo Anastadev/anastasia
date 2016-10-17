@@ -29,7 +29,7 @@ updater = Updater(token=sys.argv[1])
 
 dispatcher = updater.dispatcher
 
-file = open('/home/metaheavens/bot_telegram/emploi_du_temps/ade.ics', 'rb')
+file = open('/home/emilien/Documents/Perso/ensimag_1aa.ics', 'rb')
 lastUpdate = datetime.min
 cal = Calendar.from_ical(file.read())
 file.seek(0)
@@ -51,7 +51,7 @@ def utc_to_local(utc_dt):
 def give_todo(bot,update,args):
     if len(args) == 0:
         log.info("Give the todolist")
-        bot.sendMessage(chat_id=update.message.chat_id, text=todolist.alltodolist())
+        bot.sendMessage(chat_id=update.message.chat_id, text=todolist.alltodolist(update.message.chat_id))
     elif len(args) >= 3 and args[0] == "-a":
         try:
             d = datetime.strptime(args[1], '%d%m%H')
@@ -59,7 +59,7 @@ def give_todo(bot,update,args):
             if(d.month < datetime.now().month ):
                 y += 1
             d = d.replace(year=y)
-            todolist.addTodo(d,' '.join(args[2:]))
+            todolist.addTodo(update.message.chat_id,d,' '.join(args[2:]))
         except :
             log.info("bad date format")
             bot.sendMessage(chat_id=update.message.chat_id, text=todolist.usage())
@@ -68,7 +68,7 @@ def give_todo(bot,update,args):
         log.info("Add to the todolist")
     elif len(args) == 2 and args[0] == "-d"  :
         log.info("Delete "+args[1]+" to the todolist")
-        todolist.deleteTodo(args[1])
+        todolist.deleteTodo(update.message.chat_id,args[1])
     else:
         log.info("Bad format command")
         bot.sendMessage(chat_id=update.message.chat_id, text=todolist.usage())

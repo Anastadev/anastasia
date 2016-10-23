@@ -2,8 +2,12 @@
 from datetime import datetime
 import mysql.connector as mariadb
 from loghelper import log
+from confighelper import ConfigHelper
+import sys
 
-mariadb_connection = mariadb.connect(user='todolistuser', password='todolistpass', database='todolist')
+conf = ConfigHelper(sys.argv[1])
+
+mariadb_connection = mariadb.connect(user=conf.get_db_user(), password=conf.get_db_pass(), database=conf.get_db_name())
 cursor = mariadb_connection.cursor()
 
 

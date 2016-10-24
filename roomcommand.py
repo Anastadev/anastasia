@@ -11,7 +11,7 @@ class RoomCommand:
 
     def __init__(self, log, path_ics):
         self.logger = log
-        self.file = open(path_ics)
+        self.file = open(path_ics,"r", -1, "iso-8859-1")
         self.calendar = Calendar.from_ical(self.file.read())
         self.lastUpdate = datetime.min
         self.file.seek(0)

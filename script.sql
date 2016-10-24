@@ -1,8 +1,8 @@
 CREATE DATABASE IF NOT EXISTS todolist;
 
----CREATE USER 'todolistuser' IDENTIFIED BY 'todolistpass';
+CREATE USER 'todolistuser' IDENTIFIED BY 'todolistpass';
 
--- GRANT ALL ON todolist.* TO 'todolistuser';
+GRANT ALL ON todolist.* TO 'todolistuser';
 
 USE todolist;
 

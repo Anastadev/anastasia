@@ -16,3 +16,11 @@ def retrieve_joke():
         joke += j.text
     joke = re.sub("\s\s+", " ", joke)
     return joke
+
+
+def give_joke(bot, update):
+    bot.sendMessage(chat_id=update.message.chat_id, text=joke.retrieve_joke())
+
+
+def give_blc(bot, update):
+    bot.sendMessage(chat_id=update.message.chat_id, text="On s'en bat les couilles ♫ ")

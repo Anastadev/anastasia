@@ -6,8 +6,8 @@ import time
 def eat(bot, update):
     response = "Il n'y a rien à manger aujourd'hui !"
     r = requests.get("http://www.crous-grenoble.fr/restaurant/ru-diderot-traditionnel/")
-    regex = re.compile(r"(<h3>Menu[a-zA-Z ]*" + time.strftime(
-        "%d") + ".*(?:(?:\n.*?)*?(?:</span></div></div></div>)){1,2})", re.MULTILINE)
+    regex = re.compile(r"(<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
+        "%d"))) + ".*(?:(?:\n.*?)*?(?:</span></div></div></div>)){1,2})", re.MULTILINE)
     res = regex.search(r.text)
     if res is not None:
         text = res.group(0)

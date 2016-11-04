@@ -9,6 +9,10 @@ from icalendar import Calendar
 class RoomCommand:
     lastUpdate = datetime.min
 
+    @staticmethod
+    def utc_to_local(utc_dt):
+        return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
+
     def __init__(self, log, path_ics):
         self.logger = log
         self.file = open(path_ics,"r", -1, "iso-8859-1")
@@ -21,7 +25,7 @@ class RoomCommand:
         self.calendar = Calendar.from_ical(self.file.read())
         self.file.seek(0)
 
-    def give_room(self, bot, update):
+    def room(self):
         self.logger.info("Give the room")
         if datetime.utcnow() - timedelta(hours=3) > self.lastUpdate:
             self.refresh_cal()
@@ -40,10 +44,7 @@ class RoomCommand:
         regex = r"[A-Z][0-9]{3}( |$|)"
         if re.match(regex, location) is not None:
             location = location[:4]
-        bot.sendMessage(chat_id=update.message.chat_id, text=(
-            mine["SUMMARY"] + "\n" + location + "\n" + self.utc_to_local(mine["DTSTART"].dt).strftime(
-                "%A %H:%M").capitalize()))
+        return mine["SUMMARY"] + "\n" + location + "\n" + self.utc_to_local(mine["DTSTART"].dt).strftime("%A %H:%M").capitalize()
 
-    @staticmethod
-    def utc_to_local(utc_dt):
-        return utc_dt.replace(tzinfo=timezone.utc).astimezone(tz=None)
+    def give_room(self, bot, update):
+        bot.sendMessage(chat_id=update.message.chat_id, text=(self.room()))

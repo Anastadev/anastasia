@@ -13,7 +13,7 @@ def newEat(bot, update):
 
 
 def eatCallback(bot, update):
-    def answer(r, s):
+    def answer(r, s, resto):
         response = "Il n'y a rien à manger aujourd'hui !"
         res = r.search(s.text)
         if res is not None:
@@ -21,6 +21,7 @@ def eatCallback(bot, update):
             r = re.compile(r"<li>(.*?)</li>", re.MULTILINE)
             res2 = r.findall(text)
             response = ",".join(res2)
+        response = resto + ": " + response
         bot.sendMessage(chat_id=update.callback_query.message.chat.id, text=response)
         update.callback_query.answer()
 
@@ -28,13 +29,13 @@ def eatCallback(bot, update):
         site = requests.get("http://www.crous-grenoble.fr/restaurant/ru-lepicea/")
         regex = re.compile(r"(<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
             "%d"))) + ".*(?:(?:\n.*?)*?(?:</span></div></div></div>)){1,2})", re.MULTILINE)
-        answer(regex, site)
+        answer(regex, site, "Epicéa")
 
     elif update.callback_query.data == "Diderot":
         site = requests.get("http://www.crous-grenoble.fr/restaurant/ru-diderot-traditionnel/")
         regex = re.compile(r"(<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
             "%d"))) + ".*(?:(?:\n.*?)*?(?:</span></div></div></div>)){1,2})", re.MULTILINE)
-        answer(regex, site)
+        answer(regex, site, "Diderot")
 
 
 def eat(bot, update):

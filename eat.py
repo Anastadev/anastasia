@@ -21,7 +21,7 @@ def eatCallback(bot, update):
             r = re.compile(r"<li>(.*?)</li>", re.MULTILINE)
             res2 = r.findall(text)
             response = ",".join(res2)
-            response = resto + ": " + response
+        response = resto + ": " + response
         bot.sendMessage(chat_id=update.callback_query.message.chat.id, text=response)
         update.callback_query.answer()
 

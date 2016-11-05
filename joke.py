@@ -19,7 +19,7 @@ def retrieve_joke():
 
 
 def give_joke(bot, update):
-    bot.sendMessage(chat_id=update.message.chat_id, text=joke.retrieve_joke())
+    bot.sendMessage(chat_id=update.message.chat_id, text=retrieve_joke())
 
 
 def give_blc(bot, update):

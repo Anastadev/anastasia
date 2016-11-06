@@ -21,3 +21,15 @@ class ConfigHelper:
 
     def get_db_name(self):
         return self.config["CONFIG"]["DB_NAME"]
+
+    def get_webhook(self):
+        return self.config["CONFIG"]["WEBHOOK"] == "True"
+
+    def get_webhook_port(self):
+        return self.config["WEBHOOK"]["PORT"]
+
+    def get_webhook_adress(self):
+        return self.config["WEBHOOK"]["ADRESS"]
+
+    def get_webhook_certif(self):
+        return self.config["WEBHOOK"]["CERTIF"]

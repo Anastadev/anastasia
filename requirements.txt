@@ -4,3 +4,4 @@ beautifulsoup4
 mysqlclient
 mysql-connector-python-rf
 requests
+redis

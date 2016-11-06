@@ -43,7 +43,7 @@ if not conf.get_webhook():
 else:
     updater.start_webhook(
         listen='0.0.0.0',
-        port=conf.get_webhook_port(),
+        port=int(conf.get_webhook_port()),
         url_path=conf.get_anastasia_key(),
         key='private.key',
         cert=conf.get_webhook_certif(),

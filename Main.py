@@ -45,7 +45,7 @@ else:
         listen='0.0.0.0',
         port=int(conf.get_webhook_port()),
         url_path=conf.get_anastasia_key(),
-        key='private.key',
+        key=conf.get_webhook_private_ssl(),
         cert=conf.get_webhook_certif(),
         webhook_url=
         conf.get_webhook_adress() + ":" + conf.get_webhook_port() + "/" + conf.get_anastasia_key()

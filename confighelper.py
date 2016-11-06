@@ -33,3 +33,6 @@ class ConfigHelper:
 
     def get_webhook_certif(self):
         return self.config["WEBHOOK"]["CERTIF"]
+
+    def get_webhook_private_ssl(self):
+        return self.config["WEBHOOK"]["PRIVATE_SSL"]

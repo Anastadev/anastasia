@@ -26,15 +26,7 @@ All pushes on dev are automatically deployed on beta version of Anastasia, you c
 To link Anastasia to Telegram, we're using this lib : https://github.com/python-telegram-bot/python-telegram-bot
 
 ## Using git with SSH
-Believe it or not, it's possible to use git with SSH ! Why ? For example, you don't have to type your creds for each push/pull.
-Follow these steps :
-1. Clone the git repository to your computer (using HTTP)
-2. [Add your SSH key](https://docs.gitlab.com/ce/gitlab-basics/create-your-ssh-keys.html) to your GitLab profile.
-3. Open your git bash and go into your cloned repository
-4. `git remote remove origin`
-5. `git remote add origin ssh://git@anastasia-imag.epac.to:10022/telegram/anastasia.git`
-6. That's all folks !
-
+RTFM !
 ---------
 ## French section
 ## Telegram
@@ -62,11 +54,4 @@ Tous les pushs sur dev sont automatiquement déployés sur Anastasia Bêta, acce
 Pour le lien avec Telegram, voilà le lien du projet utilisé: https://github.com/python-telegram-bot/python-telegram-
 
 ## Utiliser git avec SSH
-Croyez-le, ou non, il est possible d'utiliser ce repo GitLab avec SSH ! L'intérêt ? Pas besoin de retaper vos creds à chaque pull/push.
-Voici la marche à suivre :
-1. Clonez le repository git chez vous (en utilisant HTTP)
-2. [Ajoutez votre clé SSH publique](https://docs.gitlab.com/ce/gitlab-basics/create-your-ssh-keys.html) à votre profil GitLab
-3. Ouvrez votre git bash et positionnez-vous la ou vous avez cloné le repo (à la racine)
-4. `git remote remove origin`
-5. `git remote add origin ssh://git@anastasia-imag.epac.to:10022/telegram/anastasia.git`
-6. Et c'est tout !
+RTFM !

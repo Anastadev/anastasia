@@ -13,12 +13,12 @@ def newEat(bot, update):
 
 
 def eatCallback(bot, update):
-    def answer(r, s, resto):
+    def answer(r, s, resto, sub_regex):
         response = "Il n'y a rien à manger aujourd'hui !"
         res = r.search(s.text)
         if res is not None:
-            text = res.group(0)
-            r = re.compile(r"<li>(.*?)</li>", re.MULTILINE)
+            text = res.group(1)
+            r = re.compile(sub_regex, re.MULTILINE)
             res2 = r.findall(text)
             response = ",".join(res2)
         response = resto + ": " + response
@@ -27,15 +27,15 @@ def eatCallback(bot, update):
 
     if update.callback_query.data == "Epicéa":
         site = requests.get("http://www.crous-grenoble.fr/restaurant/ru-lepicea/")
-        regex = re.compile(r"(<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
-            "%d"))) + ".*(?:(?:\n.*?)*?(?:</span></div></div></div>)){1,2})", re.MULTILINE)
-        answer(regex, site, "Epicéa")
+        regex = re.compile(r"<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
+            "%d"))) + ".*(?:\n.*)*?Déjeuner</h4>(.*)", re.MULTILINE)
+        answer(regex, site, "Epicéa", r".*?(?:<span.*?>|<li>)(.*?)(?:<\/span>|<\/li>)")
 
     elif update.callback_query.data == "Diderot":
         site = requests.get("http://www.crous-grenoble.fr/restaurant/ru-diderot-traditionnel/")
         regex = re.compile(r"(<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
             "%d"))) + ".*(?:(?:\n.*?)*?(?:</span></div></div></div>)){1,2})", re.MULTILINE)
-        answer(regex, site, "Diderot")
+        answer(regex, site, "Diderot", r"<li>(.*?)</li>")
 
 
 def eat(bot, update):

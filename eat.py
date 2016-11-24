@@ -2,6 +2,7 @@ import requests
 import re
 import time
 import telegram
+import html
 
 
 def newEat(bot, update):
@@ -19,7 +20,7 @@ def eatCallback(bot, update):
         if res is not None:
             text = res.group(1)
             r = re.compile(sub_regex, re.MULTILINE)
-            res2 = r.findall(text)
+            res2 = r.findall(html.unescape(text))
             response = ",".join(res2)
         response = resto + ": " + response
         bot.sendMessage(chat_id=update.callback_query.message.chat.id, text=response)
@@ -28,7 +29,7 @@ def eatCallback(bot, update):
     if update.callback_query.data == "Epicéa":
         site = requests.get("http://www.crous-grenoble.fr/restaurant/ru-lepicea/")
         regex = re.compile(r"<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
-            "%d"))) + ".*(?:\n.*)*?Déjeuner</h4>(.*)", re.MULTILINE)
+            "%d"))) + ".*(?:\n.*)*?Midi</span>(.*)", re.MULTILINE)
         answer(regex, site, "Epicéa", r".*?(?:<span.*?>|<li>)(.*?)(?:<\/span>|<\/li>)")
 
     elif update.callback_query.data == "Diderot":

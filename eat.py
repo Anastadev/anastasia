@@ -29,7 +29,7 @@ def eatCallback(bot, update):
     if update.callback_query.data == "Epicéa":
         site = requests.get("http://www.crous-grenoble.fr/restaurant/ru-lepicea/")
         regex = re.compile(r"<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
-            "%d"))) + ".*(?:\n.*)*?Midi</span>(.*)", re.MULTILINE)
+            "%d"))) + ".*(?:\n.*?)*?Midi</span>(.*)", re.MULTILINE)
         answer(regex, site, "Epicéa", r".*?(?:<span.*?>|<li>)(.*?)(?:<\/span>|<\/li>)")
 
     elif update.callback_query.data == "Diderot":

@@ -7,7 +7,8 @@ import html
 
 def newEat(bot, update):
     custom_keyboard = [[telegram.InlineKeyboardButton("Diderot", callback_data="Diderot"),
-                        telegram.InlineKeyboardButton("Epicéa", callback_data="Epicéa")]]
+                        telegram.InlineKeyboardButton("Epicéa", callback_data="Epicéa"),
+                        telegram.InlineKeyboardButton("Barnave", callback_data="Barnave")]]
     reply_markup = telegram.InlineKeyboardMarkup(custom_keyboard)
     bot.sendMessage(chat_id=update.message.chat_id, text="De quel restaurant veux-tu le menu ?",
                     reply_markup=reply_markup)
@@ -37,6 +38,12 @@ def eatCallback(bot, update):
         regex = re.compile(r"(<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
             "%d"))) + ".*(?:(?:\n.*?)*?(?:</span></div></div></div>)){1,2})", re.MULTILINE)
         answer(regex, site, "Diderot", r"<li>(.*?)</li>")
+
+    elif update.callback_query.data == "Barnave":
+        site = requests.get("http://www.crous-grenoble.fr/restaurant/ru-barnave/")
+        regex = re.compile(r"(<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
+            "%d"))) + ".*(?:\n.*?)*?Déjeuner.*?<\/div>)", re.MULTILINE)
+        answer(regex, site, "Barnave", r".*?(?:(?:Déjeuner.*?|<\/ul>)<span.*?>|<li>)(.*?)(?:<\/span>|<\/li>)")
 
 
 def eat(bot, update):

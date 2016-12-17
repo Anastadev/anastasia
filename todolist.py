@@ -1,15 +1,14 @@
-#!/usr/bin/python3
-from datetime import datetime
-import mysql.connector as mariadb
+import sys
+from pymongo import MongoClient
 from loghelper import log
 from confighelper import ConfigHelper
-import sys
+from datetime import datetime
 
 conf = ConfigHelper(sys.argv[1])
 
-mariadb_connection = mariadb.connect(user=conf.get_db_user(), password=conf.get_db_pass(), database=conf.get_db_name())
-cursor = mariadb_connection.cursor()
-
+client = MongoClient(conf.get_db())
+db = client[conf.get_db_name()]
+todos = db.todos
 
 def usage():
     return "/todo list all todo\n" \
@@ -18,29 +17,31 @@ def usage():
 
 
 def cleanList():
-    cursor.execute("DELETE FROM todolist WHERE end_date < now()")
-    cursor.execute("COMMIT WORK")
+    todos.remove({"date": {"$lt": datetime.now()}})
 
 
 def alltodolist(chat_id):
     cleanList()
-    cursor.execute("SELECT id, end_date, task FROM todolist WHERE chat_id = %s ORDER BY end_date", (chat_id,))
-    string = ""
-
-    for id, end_date, task in cursor:
-        string += str(end_date.strftime("%d/%m %H")) + " H (" + str(id) + ") : " + task + "\n"
-
-    return string
-
+    st = ""
+    ct = 1
+    for todo in todos.find({"chat_id": chat_id}).sort("date") :
+        st +=   str(todo["date"].strftime("%d/%m %H")) + " H (" + str(ct) + ") : " + todo["task"] + "\n"
+        ct += 1
+    return st
 
 def deleteTodo(chat_id, id):
-    cursor.execute("DELETE FROM todolist WHERE id = %s AND chat_id = %s", (id, chat_id))
-    cursor.execute("COMMIT WORK")
+    todos.remove(todos.find({"chat_id": chat_id}).sort("date")[int(id)  - 1])
 
 
 def addTodo(chat_id, date, task):
-    cursor.execute("INSERT INTO todolist(chat_id,end_date,task) VALUES(%s,%s,%s)", (chat_id, date, task))
-    cursor.execute("commit work")
+    todo = {
+        "chat_id": chat_id,
+        "task": task,
+        "date": date
+    }
+    id = todos.insert_one(todo)
+    log.info("insert id : "+str(id))
+
 
 
 def give_todo(bot, update, args):
@@ -55,10 +56,9 @@ def give_todo(bot, update, args):
                 y += 1
             d = d.replace(year=y)
             addTodo(update.message.chat_id, d, ' '.join(args[2:]))
-        except:
-            log.info("bad date format")
+        except Exception as err:
+            log.info("date format error: {0}".format(err))
             bot.sendMessage(chat_id=update.message.chat_id, text=usage())
-            pass
             return
         log.info("Add to the todolist")
     elif len(args) == 2 and args[0] == "-d":

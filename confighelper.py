@@ -12,15 +12,12 @@ class ConfigHelper:
 
     def path_ics(self):
         return self.config["CONFIG"]["ICS_PATH"]
-
-    def get_db_user(self):
-        return self.config["CONFIG"]["DB_USER"]
-
-    def get_db_pass(self):
-        return self.config["CONFIG"]["DB_PASS"]
-
+    
     def get_db_name(self):
         return self.config["CONFIG"]["DB_NAME"]
+
+    def get_db(self):
+        return self.config["CONFIG"]["DB"]
 
     def get_webhook(self):
         return self.config["CONFIG"]["WEBHOOK"] == "True"

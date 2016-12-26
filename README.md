@@ -1,6 +1,6 @@
 # Anastasia
 
-[![Build Status](http://vps110163.vps.ovh.ca:8080/buildStatus/icon?job=Anastasia)](http://vps110163.vps.ovh.ca:8080/job/Anastasia/)
+<a href='http://vps110163.vps.ovh.ca:8080/job/Anastasia/'><img src='http://vps110163.vps.ovh.ca:8080/buildStatus/icon?job=Anastasia'></a>
 
 ## English section
 

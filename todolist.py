@@ -55,7 +55,7 @@ def give_addtodo(bot, update, args) :
     date = (now.year,now.month)
     current_shown_dates[chat_id] = [date,' '.join(args)]#Saving the current date in a dict
     markup= create_calendar(now.year,now.month)
-    bot.send_message(update.message.chat.id, "Please, choose a date", reply_markup=markup)
+    bot.send_message(update.message.chat.id, "Choisir une date", reply_markup=markup)
 
 def todoCallback(bot, update):
     if update.callback_query.data == "next-month":
@@ -90,9 +90,8 @@ def previous_month(bot,update):
         date = (year, month)
         current_shown_dates[chat_id][0] = date
         markup = create_calendar(year, month)
-        bot.edit_message_text("Please, choose a date", update.callback_query.from_user.id, update.callback_query.message.message_id,
-                              reply_markup=markup)
-        bot.answer_update.callback_queryback_query(update.callback_query.id, text="")
+        bot.edit_message_text("Choisir une date", update.callback_query.from_user.id, update.callback_query.message.message_id,reply_markup=markup)
+        bot.answer_callback_query(update.callback_query.id, text="")
     else:
         # Do something to inform of the error
         pass

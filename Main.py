@@ -7,7 +7,7 @@ from joke import give_blc, give_joke
 import locale
 from eat import newEat, eatCallback
 from roomcommand import RoomCommand
-from todolist import give_todo
+from todolist import give_todo, give_addtodo, todoCallback
 from loghelper import log
 from confighelper import ConfigHelper
 
@@ -24,16 +24,20 @@ start_handler = CommandHandler('room', room.give_room)
 joke_handler = CommandHandler('joke', give_joke)
 blc_handler = CommandHandler('blc', give_blc)
 todo_handler = CommandHandler('todo', give_todo, pass_args=True)
+addtodo_handler = CommandHandler('addtodo', give_addtodo, pass_args=True)
 keskonmange_handler = CommandHandler('keskonmange', newEat)
 callback_handler = CallbackQueryHandler(eatCallback)
+callback_handler_todo = CallbackQueryHandler(todoCallback)
 
 
 dispatcher.add_handler(start_handler)
 dispatcher.add_handler(joke_handler)
 dispatcher.add_handler(blc_handler)
 dispatcher.add_handler(todo_handler)
+dispatcher.add_handler(addtodo_handler)
 dispatcher.add_handler(keskonmange_handler)
 dispatcher.add_handler(callback_handler, group=0)
+dispatcher.add_handler(callback_handler_todo, group=1)
 
 if not conf.get_webhook():
     updater.start_polling()

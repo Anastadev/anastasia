@@ -14,9 +14,9 @@ def get_weather():
         if nik_parser == 0 or nik_parser == 2 or nik_parser == 5:
             petit_reste_de_soupe += "\n" + line
         elif nik_parser == 7:
-            petit_reste_de_soupe += " to " + line + " °C\n"
+            petit_reste_de_soupe += " à " + line + " °C\n"
         elif nik_parser == 12:
-            petit_reste_de_soupe += "Wind : " + line + " km/h\n"
+            petit_reste_de_soupe += "Vent : " + line + " km/h\n"
         elif nik_parser == 16:
             start = line.find("mm") - 4;
             petit_reste_de_soupe += "Precipitation : " + line[start:start+3] + " mm\n"

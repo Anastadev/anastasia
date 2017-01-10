@@ -10,6 +10,7 @@ from roomcommand import RoomCommand
 from todolist import give_todo, give_addtodo, todoCallback
 from loghelper import log
 from confighelper import ConfigHelper
+from weather import give_weather
 
 
 locale.setlocale(locale.LC_TIME, 'fr_FR.UTF-8')
@@ -26,6 +27,8 @@ blc_handler = CommandHandler('blc', give_blc)
 todo_handler = CommandHandler('todo', give_todo, pass_args=True)
 addtodo_handler = CommandHandler('addtodo', give_addtodo, pass_args=True)
 keskonmange_handler = CommandHandler('keskonmange', newEat)
+weather_handler = CommandHandler('weather', give_weather)
+
 callback_handler = CallbackQueryHandler(eatCallback)
 callback_handler_todo = CallbackQueryHandler(todoCallback)
 
@@ -38,6 +41,7 @@ dispatcher.add_handler(addtodo_handler)
 dispatcher.add_handler(keskonmange_handler)
 dispatcher.add_handler(callback_handler, group=0)
 dispatcher.add_handler(callback_handler_todo, group=1)
+dispatcher.add_handler(weather_handler)
 
 if not conf.get_webhook():
     updater.start_polling()

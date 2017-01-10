@@ -15,7 +15,11 @@ class RoomCommand:
 
     def __init__(self, log, path_ics):
         self.logger = log
-        self.file = open(path_ics,"r", -1, "iso-8859-1")
+        try:
+            self.file = open(path_ics, "r", -1, "iso-8859-1")
+        except IOError:
+            print("Error: ICS file does not appear to exist.")
+            return
         self.calendar = Calendar.from_ical(self.file.read())
         self.lastUpdate = datetime.min
         self.file.seek(0)

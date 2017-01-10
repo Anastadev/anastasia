@@ -9,20 +9,20 @@ def get_weather():
     reste_de_soupe = soupe.find("pre")
 
     petit_reste_de_soupe = ""
-    nik = 0
+    nik_parser = 0
     for line in reste_de_soupe.stripped_strings:
-        if nik == 0 or nik == 2 or nik == 5:
+        if nik_parser == 0 or nik_parser == 2 or nik_parser == 5:
             petit_reste_de_soupe += "\n" + line
-        elif nik == 7:
+        elif nik_parser == 7:
             petit_reste_de_soupe += " to " + line + " °C\n"
-        elif nik == 12:
+        elif nik_parser == 12:
             petit_reste_de_soupe += "Wind : " + line + " km/h\n"
-        elif nik == 16:
+        elif nik_parser == 16:
             start = line.find("mm") - 4;
             petit_reste_de_soupe += "Precipitation : " + line[start:start+3] + " mm\n"
-        elif nik > 16:
+        elif nik_parser > 16:
             break
-        nik=nik+1
+        nik_parser=nik_parser+1
 
     return petit_reste_de_soupe
 

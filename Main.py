@@ -27,7 +27,7 @@ blc_handler = CommandHandler('blc', give_blc)
 todo_handler = CommandHandler('todo', give_todo, pass_args=True)
 addtodo_handler = CommandHandler('addtodo', give_addtodo, pass_args=True)
 keskonmange_handler = CommandHandler('keskonmange', newEat)
-weather_handler = CommandHandler('weather', give_weather)
+weather_handler = CommandHandler('weather', give_weather, pass_args=True)
 
 callback_handler = CallbackQueryHandler(eatCallback)
 callback_handler_todo = CallbackQueryHandler(todoCallback)

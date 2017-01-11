@@ -1,30 +1,29 @@
 #!/usr/bin/env python3
+import ssl
 import urllib.request
-from bs4 import BeautifulSoup
+import json
 
 
-def get_weather():
-    a = urllib.request.urlopen("http://wttr.in/grenoble").read().decode('iso-8859-1')
-    soupe = BeautifulSoup(a, 'html.parser')
-    reste_de_soupe = soupe.find("pre")
+def get_weather(args):
+    if len(args) == 0 or len(args) > 1:
+        url = "http://api.apixu.com/v1/current.json?key=cb73c1c7552d495b99e163119171101&q=Grenoble"
+    elif len(args) == 1:
+        url = "http://api.apixu.com/v1/current.json?key=cb73c1c7552d495b99e163119171101&q=" + args[0]
 
-    petit_reste_de_soupe = ""
-    nik_parser = 0
-    for line in reste_de_soupe.stripped_strings:
-        if nik_parser == 0 or nik_parser == 2 or nik_parser == 5:
-            petit_reste_de_soupe += "\n" + line
-        elif nik_parser == 7:
-            petit_reste_de_soupe += " à " + line + " °C\n"
-        elif nik_parser == 12:
-            petit_reste_de_soupe += "Vent : " + line + " km/h\n"
-        elif nik_parser == 16:
-            start = line.find("mm") - 4;
-            petit_reste_de_soupe += "Precipitation : " + line[start:start+3] + " mm\n"
-        elif nik_parser > 16:
-            break
-        nik_parser=nik_parser+1
+    tmp = urllib.request.urlopen(url).read().decode('utf8')
 
-    return petit_reste_de_soupe
+    j = json.loads(tmp)
 
-def give_weather(bot, update):
-    bot.sendMessage(chat_id=update.message.chat_id, text=get_weather(),parse_mode="HTML")
+    weather = ""
+    weather += j["location"]["name"] + " - " + j["location"]["country"] + "\n"
+    weather += j["current"]["condition"]["text"] + "\n"
+    weather += "Temperature : " + str(j["current"]["temp_c"]) + " °C\n"
+    weather += "Felt temperature. : " + str(j["current"]["feelslike_c"]) + " °C" + "\n"
+    weather += "Wind : " + str(j["current"]["wind_kph"]) + " km/h" + "\n"
+    weather += "Precipitations : " + str(j["current"]["precip_mm"]) + " km/h" + "\n"
+    weather += "[Trend](http:"+j["current"]["condition"]["icon"]+")"
+
+    return weather
+
+def give_weather(bot, update, args):
+    bot.sendMessage(chat_id=update.message.chat_id, text=get_weather(args),parse_mode="Markdown")

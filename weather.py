@@ -16,7 +16,6 @@ def get_weather(args):
 
     weather = ""
     weather += j["location"]["name"] + " - " + j["location"]["country"] + "\n"
-    weather += j["current"]["condition"]["text"] + "\n"
     weather += "Température : " + str(j["current"]["temp_c"]) + " °C\n"
     weather += "Température ressentie : " + str(j["current"]["feelslike_c"]) + " °C" + "\n"
     weather += "Vent : " + str(j["current"]["wind_kph"]) + " km/h" + "\n"

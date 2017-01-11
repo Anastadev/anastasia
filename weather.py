@@ -17,11 +17,11 @@ def get_weather(args):
     weather = ""
     weather += j["location"]["name"] + " - " + j["location"]["country"] + "\n"
     weather += j["current"]["condition"]["text"] + "\n"
-    weather += "Temperature : " + str(j["current"]["temp_c"]) + " °C\n"
-    weather += "Felt temperature. : " + str(j["current"]["feelslike_c"]) + " °C" + "\n"
-    weather += "Wind : " + str(j["current"]["wind_kph"]) + " km/h" + "\n"
-    weather += "Precipitations : " + str(j["current"]["precip_mm"]) + " mm" + "\n"
-    weather += "[Trend](http:"+j["current"]["condition"]["icon"]+")"
+    weather += "Température : " + str(j["current"]["temp_c"]) + " °C\n"
+    weather += "Température ressentie : " + str(j["current"]["feelslike_c"]) + " °C" + "\n"
+    weather += "Vent : " + str(j["current"]["wind_kph"]) + " km/h" + "\n"
+    weather += "Précipitations : " + str(j["current"]["precip_mm"]) + " mm" + "\n"
+    weather += "[Tendance](http:"+j["current"]["condition"]["icon"]+")"
 
     return weather
 

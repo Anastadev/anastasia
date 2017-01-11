@@ -8,7 +8,7 @@ def create_calendar(year,month):
     row.append(telegram.InlineKeyboardButton(calendar.month_name[month]+" "+str(year),callback_data="ignore"))
     rows.append(row)
     #Second row - Week Days
-    week_days=["M","T","W","R","F","S","U"]
+    week_days=["L","M","M","J","V","S","D"]
     row=[]
     for day in week_days:
         row.append(telegram.InlineKeyboardButton(day,callback_data="ignore"))

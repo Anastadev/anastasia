@@ -20,7 +20,7 @@ def get_weather(args):
     weather += "Temperature : " + str(j["current"]["temp_c"]) + " °C\n"
     weather += "Felt temperature. : " + str(j["current"]["feelslike_c"]) + " °C" + "\n"
     weather += "Wind : " + str(j["current"]["wind_kph"]) + " km/h" + "\n"
-    weather += "Precipitations : " + str(j["current"]["precip_mm"]) + " km/h" + "\n"
+    weather += "Precipitations : " + str(j["current"]["precip_mm"]) + " mm" + "\n"
     weather += "[Trend](http:"+j["current"]["condition"]["icon"]+")"
 
     return weather

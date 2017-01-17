@@ -27,7 +27,7 @@ def main():
     addtodo_handler = CommandHandler('addtodo', todo.give_add_todo, pass_args=True)
     keskonmange_handler = CommandHandler('keskonmange', new_eat)
     weather_handler = CommandHandler('weather', weather.give_weather, pass_args=True)
-    airquality_handler = CommandHandler('airquality', airquality.give_airquality)
+    airquality_handler = CommandHandler('airquality', airquality.give_airquality, pass_args=True)
 
     callback_handler = CallbackQueryHandler(eat_callback)
     callback_handler_todo = CallbackQueryHandler(todo.todo_callback)

@@ -1,6 +1,0 @@
-python-telegram-bot
-icalendar
-beautifulsoup4
-requests
-redis
-pymongo

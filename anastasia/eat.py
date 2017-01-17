@@ -5,7 +5,7 @@ import telegram
 import html
 
 
-def newEat(bot, update):
+def new_eat(bot, update):
     custom_keyboard = [[telegram.InlineKeyboardButton("Diderot", callback_data="Diderot"),
                         telegram.InlineKeyboardButton("Epicéa", callback_data="Epicéa"),
                         telegram.InlineKeyboardButton("Barnave", callback_data="Barnave")]]
@@ -14,7 +14,7 @@ def newEat(bot, update):
                     reply_markup=reply_markup)
 
 
-def eatCallback(bot, update):
+def eat_callback(bot, update):
     def answer(r, s, resto, sub_regex):
         response = "Il n'y a rien à manger aujourd'hui !"
         res = r.search(s.text)

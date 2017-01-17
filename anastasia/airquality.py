@@ -2,6 +2,8 @@
 
 import urllib.request
 import json
+import unicodedata
+import string
 
 # Adapt the google map bounds to get more stations within the air pollution API
 # This value works fine for Grenoble
@@ -10,11 +12,15 @@ unavailable_stations = 0
 nb_stations = 0
 grenoble = "Grenoble"
 
+def remove_accents(data):
+    return ''.join(x for x in unicodedata.normalize('NFKD', data) if x in string.ascii_letters).lower()
 
 def get_indice_from_bounds(url):
     """Return the average aqi of all stations founded within the area."""
     global nb_stations
     global unavailable_stations
+    unavailable_stations = 0
+    nb_stations = 0
 
     tmp = urllib.request.urlopen(url).read().decode('utf8')
     j = json.loads(tmp)
@@ -52,7 +58,7 @@ def format_args(args):
     """Format the arguments for the google API"""
     res = ""
     for i in range(0, len(args)):
-        res += "+"+str(args[i])
+        res += "+"+str(remove_accents(args[i]))
     return res
 
 
@@ -81,8 +87,8 @@ def get_airquality(args):
         elif 250 < indice:
             airquality += "Dangereux pour la santé"
 
-    if unavailable_stations > 0:
-        airquality += "\nStations disponibles : " + str(nb_stations-unavailable_stations) + "/" + str(nb_stations)
+
+    airquality += "\nStations disponibles : " + str(nb_stations-unavailable_stations) + "/" + str(nb_stations)
 
     return airquality
 

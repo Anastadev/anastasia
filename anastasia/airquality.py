@@ -1,11 +1,14 @@
-#!/usr/bin/env python3
+# coding: utf-8
+
 import urllib.request
 import json
+
 
 def get_indice_from_url(url):
     tmp = urllib.request.urlopen(url).read().decode('utf8')
     j = json.loads(tmp)
     return int(j["data"]["aqi"])
+
 
 def get_airquality():
     airquality = "Qualité de l'air, Grenoble\n"
@@ -32,20 +35,20 @@ def get_airquality():
     url = "http://api.waqi.info/feed/geo:45.1766700;5.6866700/?token=f092408be447fbe8a44f9849baf81f46acfc704f"
     indice += get_indice_from_url(url)
 
-    indice = int(indice/5)
+    indice = int(indice / 5)
 
     airquality += "Indice : " + str(indice) + " - "
-    if(indice > 0 and indice < 51):
+    if 0 < indice < 51:
         airquality += "Bon"
-    elif(indice > 50 and indice < 101):
+    elif 50 < indice < 101:
         airquality += "Modéré"
-    elif (indice > 100 and indice < 151):
+    elif 100 < indice < 151:
         airquality += "Insalubre pour les gens sensibles"
-    elif (indice > 150 and indice < 201):
+    elif 150 < indice < 201:
         airquality += "Insalubre"
-    elif (indice > 200 and indice < 251):
+    elif 200 < indice < 251:
         airquality += "Malsain"
-    elif (indice > 250 and indice < 251):
+    elif 250 < indice < 251:
         airquality += "Dangereux pour la santé"
 
     return airquality
@@ -53,4 +56,3 @@ def get_airquality():
 
 def give_airquality(bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text=get_airquality(), parse_mode="Markdown")
-

@@ -4,6 +4,7 @@ node {
               sshagent (credentials: ['privateserver']) {
                 //sh 'ssh-add -l' 
                 sh 'pwd'
+                sh 'ls'
                 sh 'env'
                 sh 'ssh root@vps110163.vps.ovh.ca "cd /; pwd"'
                 sh 'ls -la'

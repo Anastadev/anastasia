@@ -3,6 +3,7 @@ node {
         try{
               sshagent (credentials: ['privateserver']) {
                 //sh 'ssh-add -l' 
+                sh 'git rev-parse HEAD'
                 sh 'env'
                 sh 'ssh root@vps110163.vps.ovh.ca "cd /; pwd"'
                 sh 'ls -la'

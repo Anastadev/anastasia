@@ -57,4 +57,4 @@ Tous les pushs sur dev sont automatiquement déployés sur Anastasia Bêta, acce
 Pour le lien avec Telegram, voilà le lien du projet utilisé: https://github.com/python-telegram-bot/python-telegram-bot
 
 ## Utiliser git avec SSH
-RTFM ! 
+RTFM !

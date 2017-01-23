@@ -1,7 +1,9 @@
 import requests
-import re
-import time
 import telegram
+import urllib.request
+import re
+from bs4 import BeautifulSoup
+import time
 import html
 
 
@@ -16,22 +18,48 @@ def new_eat(bot, update):
 
 def eat_callback(bot, update):
     def answer(r, s, resto, sub_regex):
-        response = "Il n'y a rien à manger aujourd'hui !"
+        reply = "Il n'y a rien à manger aujourd'hui !"
         res = r.search(s.text)
         if res is not None:
             text = res.group(1)
             r = re.compile(sub_regex, re.MULTILINE)
             res2 = r.findall(html.unescape(text))
-            response = ",".join(res2)
-        response = resto + ": " + response
-        bot.sendMessage(chat_id=update.callback_query.message.chat.id, text=response)
+            reply = ", ".join([text.capitalize() for text in res2])
+        reply = resto + ": " + reply
+        bot.sendMessage(chat_id=update.callback_query.message.chat.id, text=reply)
         update.callback_query.answer()
 
     if update.callback_query.data == "Epicéa":
-        site = requests.get("http://www.crous-grenoble.fr/restaurant/ru-lepicea/")
-        regex = re.compile(r"<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
-            "%d"))) + ".*(?:\n.*?)*?Midi</span>(.*)", re.MULTILINE)
-        answer(regex, site, "Epicéa", r".*?(?:<span.*?>|<li>)(.*?)(?:<\/span>|<\/li>)")
+        site = urllib.request.urlopen("http://www.crous-grenoble.fr/restaurant/ru-lepicea/")
+        html_text = site.read().decode('iso-8859-1')
+        soup = BeautifulSoup(html_text, 'html.parser')
+
+        list_menu = soup.find("div", attrs={"id": "menu-repas"}).ul.children
+
+        regex = re.compile(r".*?Menu.*?" + str(int(time.strftime("%d"))) + "(.*\n)*", re.MULTILINE)
+
+        result = None
+        for menu in list_menu:
+            extract = regex.search(str(menu))
+            if extract is not None and extract.group(0) is not None:
+                result = extract.group(0)
+
+        new_soup = BeautifulSoup(result, 'html.parser')
+        list_sections = new_soup(attrs={"class": "liste-plats"})
+
+        response = None
+        for item in list_sections[4]("li"):
+            if response is None:
+                response = str(item.string).capitalize()
+            else:
+                response = response + ", " + str(item.string).capitalize()
+
+        if response is None:
+            bot.sendMessage(chat_id=update.callback_query.message.chat.id, text="Il n'y a rien à manger aujourd'hui !")
+            update.callback_query.answer()
+        else:
+            bot.sendMessage(chat_id=update.callback_query.message.chat.id, text="Epicea: " + response)
+            update.callback_query.answer()
 
     elif update.callback_query.data == "Diderot":
         site = requests.get("http://www.crous-grenoble.fr/restaurant/ru-diderot-traditionnel/")

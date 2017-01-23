@@ -16,7 +16,7 @@ setup(
         "icalendar",
         "beautifulsoup4",
         "requests",
-        "pymongo"
+        "pymongo", 'bs4'
     ],
     classifiers=[
         "Programming Language :: Python",

@@ -18,7 +18,7 @@ def main():
     dispatcher = updater.dispatcher
 
     room = roomcommand.RoomCommand(loghelper.log, conf.path_ics())
-    todo = todolist.Todo()
+    todo = todolist.Todo(conf)
 
     start_handler = CommandHandler('room', room.give_room)
     joke_handler = CommandHandler('joke', joke.give_joke)

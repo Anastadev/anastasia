@@ -2,6 +2,8 @@ import re
 import sys
 from datetime import datetime
 
+from pymongo.errors import DuplicateKeyError
+
 from anastasia.confighelper import ConfigHelper
 from pymongo import MongoClient
 from anastasia.telegramcalendar import create_calendar
@@ -11,10 +13,10 @@ from anastasia.loghelper import log
 
 class Todo:
     # contains the month printed by addtodo and the self.todos content
-    def __init__(self):
+    def __init__(self,confighelper):
         self.current_shown_dates = {}
 
-        conf = ConfigHelper(sys.argv[1])
+        conf = confighelper
 
         client = MongoClient(conf.get_db())
         db = client[conf.get_db_name()]
@@ -25,28 +27,28 @@ class Todo:
         return "/todo list all todo\n" \
                "/todo [-d id] delete a todo"
 
-    def clean_list(self):
-        self.todos.remove({"date": {"$lt": datetime.now()}})
+    def clean_list(self,chat_id):
+        self.todos[chat_id].remove({"date": {"$lt": datetime.now()}})
 
     def all_to_do_list(self, chat_id):
-        self.clean_list()
+        self.clean_list(chat_id)
         st = ""
         ct = 1
-        for todo in self.todos.find({"chat_id": chat_id}).sort("date"):
+        for todo in self.todos[chat_id].find().sort("date"):
             st += str(todo["date"].strftime("%d/%m")) + " (" + str(ct) + ") : " + todo["task"] + "\n"
             ct += 1
         return st
 
     def delete_todo(self, chat_id, id_todo):
-        self.todos.remove(self.todos.find({"chat_id": chat_id}).sort("date")[int(id_todo) - 1])
+        self.todos[chat_id].remove(self.todos[chat_id].find().sort("date")[int(id_todo) - 1])
 
-    def add_todo(self, chat_id, date, task):
+    def add_todo(self, chat_id, message_id, date, task):
         todo = {
-            "chat_id": chat_id,
+            "_id" : message_id,
             "task": task,
             "date": date
         }
-        id_todo = self.todos.insert_one(todo)
+        id_todo = self.todos[chat_id].insert_one(todo)
         log.info("insert id : " + str(id_todo))
         return todo
 
@@ -75,7 +77,14 @@ class Todo:
             date = datetime.strptime(
                 str(self.current_shown_dates[chat_id][0][0]) + str(self.current_shown_dates[chat_id][0][1]),
                 '%Y%m').replace(day=int(ma.group(1)))
-            todo = self.add_todo(chat_id, date, self.current_shown_dates[chat_id][1])
+            try:
+                todo = self.add_todo(update.callback_query.message.chat_id,update.callback_query.message.message_id, date, self.current_shown_dates[chat_id][1],bot)
+            except DuplicateKeyError:
+                log.info("duplicatekey for : " + str(todo))
+                # erase calendar
+                bot.edit_message_text("todo existant",
+                                      update.callback_query.from_user.id, update.callback_query.message.message_id,
+                                      reply_markup="")
             log.info("add todo : " + str(todo))
             bot.edit_message_text(str(todo["date"].strftime("%d/%m")) + " : " + todo["task"],
                                   update.callback_query.from_user.id, update.callback_query.message.message_id,

@@ -1,10 +1,8 @@
 import re
-import sys
 from datetime import datetime
 
 from pymongo.errors import DuplicateKeyError
 
-from anastasia.confighelper import ConfigHelper
 from pymongo import MongoClient
 from anastasia.telegramcalendar import create_calendar
 

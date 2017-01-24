@@ -28,7 +28,7 @@ def main():
     keskonmange_handler = CommandHandler('keskonmange', new_eat)
     weather_handler = CommandHandler('weather', weather.give_weather, pass_args=True)
     airquality_handler = CommandHandler('airquality', airquality.give_airquality, pass_args=True)
-    nude_handler = CommandHandler('nude', nude.get_nude)
+    nude_handler = CommandHandler('nude', nude.get_nude, pass_args=True)
 
     callback_handler = CallbackQueryHandler(eat_callback)
     callback_handler_todo = CallbackQueryHandler(todo.todo_callback)

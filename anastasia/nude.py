@@ -3,20 +3,17 @@ from bs4 import BeautifulSoup
 
 
 def get_nude(bot, update, args):
-    if update.message.chat.type != "group":
-        if len(args) > 0 and args[0] == "men":
-            site = urllib.request.urlopen("http://www.bonjourmonsieur.fr/monsieur/random.html")
-            html = site.read().decode('iso-8859-1')
-            soup = BeautifulSoup(html, 'html.parser')
+    if len(args) > 0 and args[0] == "men":
+        site = urllib.request.urlopen("http://www.bonjourmonsieur.fr/monsieur/random.html")
+        html = site.read().decode('iso-8859-1')
+        soup = BeautifulSoup(html, 'html.parser')
 
-            nude = soup.find("div", attrs={"class": "img"})
-            bot.sendPhoto(chat_id=update.message.chat_id, photo="http://www.bonjourmonsieur.fr/" + nude.h1.img['src'])
-        else:
-            site = urllib.request.urlopen("http://dites.bonjourmadame.fr/random")
-            html = site.read().decode('iso-8859-1')
-            soup = BeautifulSoup(html, 'html.parser')
-
-            nude = soup.find("div", attrs={"class": "photo post"})
-            bot.sendPhoto(chat_id=update.message.chat_id, photo=nude.a.img['src'])
+        nude = soup.find("div", attrs={"class": "img"})
+        bot.sendPhoto(chat_id=update.message.chat_id, photo="http://www.bonjourmonsieur.fr/" + nude.h1.img['src'])
     else:
-        bot.sendMessage(chat_id=update.message.chat_id, text="Viens me voir en privé !")
+        site = urllib.request.urlopen("http://dites.bonjourmadame.fr/random")
+        html = site.read().decode('iso-8859-1')
+        soup = BeautifulSoup(html, 'html.parser')
+
+        nude = soup.find("div", attrs={"class": "photo post"})
+        bot.sendPhoto(chat_id=update.message.chat_id, photo=nude.a.img['src'])

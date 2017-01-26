@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
-import urllib.request
+import requests
 import re
 from bs4 import BeautifulSoup
 
 
 def retrieve_fact():
-    f = urllib.request.urlopen("http://randomfactgenerator.net/")
-    fact = f.read().decode('iso-8859-1')
+    f = requests.get("http://randomfactgenerator.net/")
+    fact = f.content
     soup = BeautifulSoup(fact, 'html.parser')
     facts = soup.findAll("div", {"id": "z"})
-    fact = facts.text
+    fact = ""
+    for f in facts:
+        fact += f.text
+    fact = re.search('(.+?)\.', fact).group(1)
     return fact
 
 

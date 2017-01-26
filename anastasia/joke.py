@@ -43,3 +43,6 @@ def ro():
 
 def give_bienia(bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text=ro())
+
+def get_chatte(bot, update):
+    bot.sendPhoto(chat_id=update.message.chat_id, photo="http://www.randomkittengenerator.com/cats/rotator.php")

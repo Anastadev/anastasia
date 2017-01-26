@@ -32,6 +32,7 @@ def main():
     airquality_handler = CommandHandler('airquality', airquality.give_airquality, pass_args=True)
     nude_handler = CommandHandler('nude', nudeModule.get_nude, pass_args=True)
     fact_handler = CommandHandler('fact', fact.give_fact)
+    chatte_handler = CommandHandler('chatte', joke.get_chatte)
 
     callback_handler = CallbackQueryHandler(eat_callback)
     callback_handler_todo = CallbackQueryHandler(todo.todo_callback)
@@ -49,6 +50,7 @@ def main():
     dispatcher.add_handler(airquality_handler)
     dispatcher.add_handler(nude_handler)
     dispatcher.add_handler(fact_handler)
+    dispatcher.add_handler(chatte_handler)
 
     if not conf.get_webhook():
         updater.start_polling()

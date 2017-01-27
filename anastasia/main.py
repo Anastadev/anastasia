@@ -32,6 +32,7 @@ def main():
     nude_handler = CommandHandler('nude', nudeModule.get_nude, pass_args=True)
     chatte_handler = CommandHandler('chatte', joke.get_chatte)
     help_handler = CommandHandler('help', help.give_credits)
+    fact_handler = CommandHandler('fact', fact.give_fact)
 
     callback_handler = CallbackQueryHandler(eat_callback)
     callback_handler_todo = CallbackQueryHandler(todo.todo_callback)
@@ -49,6 +50,7 @@ def main():
     dispatcher.add_handler(nude_handler)
     dispatcher.add_handler(help_handler)
     dispatcher.add_handler(chatte_handler)
+    dispatcher.add_handler(fact_handler)
 
     if not conf.get_webhook():
         updater.start_polling()

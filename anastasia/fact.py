@@ -3,16 +3,15 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
-
 def retrieve_fact():
-    f = requests.get("http://randomfactgenerator.net/")
-    fact = f.content
-    soup = BeautifulSoup(fact, 'html.parser')
-    facts = soup.findAll("div", {"id": "z"})
+    site = requests.get("https://www.fortunes-fr.org/fortunes.php")
+    html = site.content
+    soup = BeautifulSoup(html, 'html.parser')
+    facts = soup.findAll("p", {"class": "fortune"})
     fact = ""
     for f in facts:
         fact += f.text
-    fact = re.search('(.+?)\.', fact).group(1)
+    fact = re.sub("\s\s+", " ", fact)
     return fact
 
 

@@ -33,6 +33,7 @@ def main():
     chatte_handler = CommandHandler('chatte', joke.get_chatte)
     help_handler = CommandHandler('help', help.give_credits)
     fact_handler = CommandHandler('fact', fact.give_fact)
+    citation_handler = CommandHandler('citation', fact.give_citation)
 
     callback_handler = CallbackQueryHandler(eat_callback)
     callback_handler_todo = CallbackQueryHandler(todo.todo_callback)
@@ -51,6 +52,7 @@ def main():
     dispatcher.add_handler(help_handler)
     dispatcher.add_handler(chatte_handler)
     dispatcher.add_handler(fact_handler)
+    dispatcher.add_handler(citation_handler)
 
     if not conf.get_webhook():
         updater.start_polling()

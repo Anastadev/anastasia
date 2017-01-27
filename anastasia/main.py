@@ -3,7 +3,7 @@
 import locale
 import sys
 
-from anastasia import airquality, confighelper, joke, loghelper, roomcommand, todolist, weather, nude, help
+from anastasia import airquality, confighelper, joke, loghelper, roomcommand, todolist, weather, nude, fact, help
 from telegram.ext import CommandHandler, CallbackQueryHandler
 from telegram.ext import Updater
 
@@ -30,6 +30,7 @@ def main():
     weather_handler = CommandHandler('weather', weather.give_weather, pass_args=True)
     airquality_handler = CommandHandler('airquality', airquality.give_airquality, pass_args=True)
     nude_handler = CommandHandler('nude', nudeModule.get_nude, pass_args=True)
+    chatte_handler = CommandHandler('chatte', joke.get_chatte)
     help_handler = CommandHandler('help', help.give_credits)
 
     callback_handler = CallbackQueryHandler(eat_callback)
@@ -47,6 +48,7 @@ def main():
     dispatcher.add_handler(airquality_handler)
     dispatcher.add_handler(nude_handler)
     dispatcher.add_handler(help_handler)
+    dispatcher.add_handler(chatte_handler)
 
     if not conf.get_webhook():
         updater.start_polling()

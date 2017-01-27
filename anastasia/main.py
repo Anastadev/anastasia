@@ -3,7 +3,7 @@
 import locale
 import sys
 
-from anastasia import airquality, confighelper, joke, loghelper, roomcommand, todolist, weather, nude, fact
+from anastasia import airquality, confighelper, joke, loghelper, roomcommand, todolist, weather, nude, fact, help
 from telegram.ext import CommandHandler, CallbackQueryHandler
 from telegram.ext import Updater
 
@@ -24,15 +24,14 @@ def main():
     start_handler = CommandHandler('room', room.give_room)
     joke_handler = CommandHandler('joke', joke.give_joke)
     blc_handler = CommandHandler('blc', joke.give_blc)
-    bienia_handler = CommandHandler('bienia', joke.give_bienia)
     todo_handler = CommandHandler('todo', todo.give_todo, pass_args=True)
     addtodo_handler = CommandHandler('addtodo', todo.give_add_todo, pass_args=True)
     keskonmange_handler = CommandHandler('keskonmange', new_eat)
     weather_handler = CommandHandler('weather', weather.give_weather, pass_args=True)
     airquality_handler = CommandHandler('airquality', airquality.give_airquality, pass_args=True)
     nude_handler = CommandHandler('nude', nudeModule.get_nude, pass_args=True)
-    fact_handler = CommandHandler('fact', fact.give_fact)
     chatte_handler = CommandHandler('chatte', joke.get_chatte)
+    help_handler = CommandHandler('help', help.give_credits)
 
     callback_handler = CallbackQueryHandler(eat_callback)
     callback_handler_todo = CallbackQueryHandler(todo.todo_callback)
@@ -40,7 +39,6 @@ def main():
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(joke_handler)
     dispatcher.add_handler(blc_handler)
-    dispatcher.add_handler(bienia_handler)
     dispatcher.add_handler(todo_handler)
     dispatcher.add_handler(addtodo_handler)
     dispatcher.add_handler(keskonmange_handler)
@@ -49,7 +47,7 @@ def main():
     dispatcher.add_handler(weather_handler)
     dispatcher.add_handler(airquality_handler)
     dispatcher.add_handler(nude_handler)
-    dispatcher.add_handler(fact_handler)
+    dispatcher.add_handler(help_handler)
     dispatcher.add_handler(chatte_handler)
 
     if not conf.get_webhook():

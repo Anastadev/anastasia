@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import urllib.request
+import requests
 import re
 from bs4 import BeautifulSoup
 
@@ -45,4 +46,10 @@ def give_bienia(bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text=ro())
 
 def get_chatte(bot, update):
-    bot.sendPhoto(chat_id=update.message.chat_id, photo="http://www.randomkittengenerator.com/cats/rotator.php")
+    site = requests.get("http://random.cat/meow")
+    html = site.text
+    print(html)
+    photo = re.search('http[^"]*', html)
+    photo = photo.group()
+    photo = re.sub(r"\\", "", photo)
+    bot.sendPhoto(chat_id=update.message.chat_id, photo=photo)

@@ -26,24 +26,6 @@ def give_joke(bot, update):
 def give_blc(bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text="On s'en bat les couilles ♫ ")
 
-def ro():
-    e="ÇA EXPLOSE\n\n"
-    e+= "                       _.-^^------....,,\n"
-    e+= "                    _--                  --_ \n"
-    e+= "                   <                        >)\n"
-    e+= "                   |                         | \n"
-    e+= "                   \._                   _./  \n"
-    e+= "                       ```--. . , ; .--'''\n"
-    e+= "                             | |   |\n"
-    e+= "                           .-=| | |=-.\n"
-    e+= "                           `-=##=-'\n"
-    e+= "                             | ;  :|\n"
-    e+= "                    ___.,-#%&#~,.___\n"
-    return e;
-
-
-def give_bienia(bot, update):
-    bot.sendMessage(chat_id=update.message.chat_id, text=ro())
 
 def get_chatte(bot, update):
     site = requests.get("http://random.cat/meow")

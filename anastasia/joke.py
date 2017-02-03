@@ -43,3 +43,6 @@ def get_chienne(bot, update):
     photo = soup.findAll("img")[0].get('src')
     photo = "http://random.dog/" + photo
     bot.sendPhoto(chat_id=update.message.chat_id, photo=photo)
+
+def send_kappa(bot, update):
+    bot.sendPhoto(chat_id=update.message.chat_id, photo='https://pbs.twimg.com/media/B-wgfCWWkAAyWa_.jpg')

@@ -1,7 +1,7 @@
 import urllib.request
 import time
 from bs4 import BeautifulSoup
-from pymongo import MongoClient
+from anastasia import mongoda
 from anastasia.loghelper import log
 
 T_WOMEN = "women"
@@ -9,28 +9,27 @@ T_MEN = "men"
 
 class Nude:
 
-    def __init__(self,config_):
-        client = MongoClient(config_.get_db())
-        db = client[config_.get_db_name()]
-        self.db = db.nudes
+    def __init__(self):
+        log.info(mongoda.getDB())
+        self.db = mongoda.getDB().nudes
 
     def get_nude(self,bot, update, args):
         if len(args) > 0 and args[0] == "men":
-            self.increase(T_MEN, update.message.from_user.id,update.message.from_user.username)
             site = urllib.request.urlopen("http://www.bonjourmonsieur.fr/monsieur/random.html")
             html = site.read().decode('iso-8859-1')
             soup = BeautifulSoup(html, 'html.parser')
 
             nude = soup.find("div", attrs={"class": "img"})
             bot.sendPhoto(chat_id=update.message.chat_id, photo="http://www.bonjourmonsieur.fr/" + nude.h1.img['src'])
+            self.increase(T_MEN, update.message.from_user.id, update.message.from_user.username)
         else:
-            self.increase(T_WOMEN,update.message.from_user.id,update.message.from_user.username)
             site = urllib.request.urlopen("http://dites.bonjourmadame.fr/random")
             html = site.read().decode('iso-8859-1')
             soup = BeautifulSoup(html, 'html.parser')
 
             nude = soup.find("div", attrs={"class": "photo post"})
             bot.sendPhoto(chat_id=update.message.chat_id, photo=nude.a.img['src'])
+            self.increase(T_WOMEN, update.message.from_user.id, update.message.from_user.username)
 
     def increase(self,type_,userId_,userName_):
         cursor = self.db.find({"user.id":userId_})
@@ -47,7 +46,7 @@ class Nude:
                     "women":0
                 }
             }
-            log.info(doc)
+            log.info("Adding new user to nudes DB : " + userName_)
             doc["count"][type_] += 1
             self.db.insert_one(doc)
         else:

@@ -3,7 +3,7 @@
 import locale
 import sys
 
-from anastasia import airquality, confighelper, joke, loghelper, roomcommand, todolist, weather, nude
+from anastasia import airquality, confighelper, joke, loghelper, roomcommand, todolist, weather, nude,mongoda
 from telegram.ext import CommandHandler, CallbackQueryHandler
 from telegram.ext import Updater
 
@@ -17,9 +17,11 @@ def main():
     updater = Updater(token=conf.get_anastasia_key())
     dispatcher = updater.dispatcher
 
+    mongoda.MongoDA.init(conf)
+
     room = roomcommand.RoomCommand(loghelper.log, conf.path_ics())
-    todo = todolist.Todo(conf)
-    nudeModule = nude.Nude(conf)
+    todo = todolist.Todo()
+    nudeModule = nude.Nude()
 
     start_handler = CommandHandler('room', room.give_room)
     joke_handler = CommandHandler('joke', joke.give_joke)

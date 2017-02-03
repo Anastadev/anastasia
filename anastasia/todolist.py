@@ -3,7 +3,7 @@ from datetime import datetime
 
 from pymongo.errors import DuplicateKeyError
 
-from pymongo import MongoClient
+from anastasia import mongoda
 from anastasia.telegramcalendar import create_calendar
 
 from anastasia.loghelper import log
@@ -11,14 +11,10 @@ from anastasia.loghelper import log
 
 class Todo:
     # contains the month printed by addtodo and the self.todos content
-    def __init__(self,confighelper):
+    def __init__(self):
+        log.info(mongoda.getDB())
         self.current_shown_dates = {}
-
-        conf = confighelper
-
-        client = MongoClient(conf.get_db())
-        db = client[conf.get_db_name()]
-        self.todos = db.self.todos
+        self.todos = mongoda.getDB().todos
 
     @staticmethod
     def usage():

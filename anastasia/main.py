@@ -3,7 +3,7 @@
 import locale
 import sys
 
-from anastasia import airquality, confighelper, joke, loghelper, roomcommand, todolist, weather, nude, fact, help
+from anastasia import airquality, confighelper, joke, loghelper, roomcommand, todolist, weather, nude, fact, help,mongoda
 from telegram.ext import CommandHandler, CallbackQueryHandler
 from telegram.ext import Updater
 
@@ -17,9 +17,11 @@ def main():
     updater = Updater(token=conf.get_anastasia_key())
     dispatcher = updater.dispatcher
 
+    mongoda.MongoDA.init(conf)
+
     room = roomcommand.RoomCommand(loghelper.log, conf.path_ics())
-    todo = todolist.Todo(conf)
-    nudeModule = nude.Nude(conf)
+    todo = todolist.Todo()
+    nudeModule = nude.Nude()
 
     start_handler = CommandHandler('room', room.give_room)
     joke_handler = CommandHandler('joke', joke.give_joke)
@@ -34,6 +36,8 @@ def main():
     help_handler = CommandHandler('help', help.give_credits)
     fact_handler = CommandHandler('fact', fact.give_fact)
     citation_handler = CommandHandler('citation', fact.give_citation)
+    chienne_handler = CommandHandler('chienne', joke.get_chienne)
+    kappa_handler = CommandHandler('kappa',joke.send_kappa)
 
     callback_handler = CallbackQueryHandler(eat_callback)
     callback_handler_todo = CallbackQueryHandler(todo.todo_callback)
@@ -53,6 +57,8 @@ def main():
     dispatcher.add_handler(chatte_handler)
     dispatcher.add_handler(fact_handler)
     dispatcher.add_handler(citation_handler)
+    dispatcher.add_handler(chienne_handler)
+    dispatcher.add_handler(kappa_handler)
 
     if not conf.get_webhook():
         updater.start_polling()

@@ -35,3 +35,14 @@ def get_chatte(bot, update):
     photo = photo.group()
     photo = re.sub(r"\\", "", photo)
     bot.sendPhoto(chat_id=update.message.chat_id, photo=photo)
+
+def get_chienne(bot, update):
+    site = requests.get("http://random.dog/")
+    html = site.content
+    soup = BeautifulSoup(html, 'html.parser')
+    photo = soup.findAll("img")[0].get('src')
+    photo = "http://random.dog/" + photo
+    bot.sendPhoto(chat_id=update.message.chat_id, photo=photo)
+
+def send_kappa(bot, update):
+    bot.sendPhoto(chat_id=update.message.chat_id, photo='https://pbs.twimg.com/media/B-wgfCWWkAAyWa_.jpg')

@@ -37,6 +37,7 @@ def main():
     fact_handler = CommandHandler('fact', fact.give_fact)
     citation_handler = CommandHandler('citation', fact.give_citation)
     chienne_handler = CommandHandler('chienne', joke.get_chienne)
+    kappa_handler = CommandHandler('kappa',joke.send_kappa)
 
     callback_handler = CallbackQueryHandler(eat_callback)
     callback_handler_todo = CallbackQueryHandler(todo.todo_callback)
@@ -52,6 +53,12 @@ def main():
     dispatcher.add_handler(weather_handler)
     dispatcher.add_handler(airquality_handler)
     dispatcher.add_handler(nude_handler)
+    dispatcher.add_handler(help_handler)
+    dispatcher.add_handler(chatte_handler)
+    dispatcher.add_handler(fact_handler)
+    dispatcher.add_handler(citation_handler)
+    dispatcher.add_handler(chienne_handler)
+    dispatcher.add_handler(kappa_handler)
 
     if not conf.get_webhook():
         updater.start_polling()

@@ -3,7 +3,7 @@
 import locale
 import sys
 
-from anastasia import airquality, confighelper, joke, loghelper, roomcommand, todolist, weather, nude,mongoda
+from anastasia import airquality, confighelper, joke, loghelper, roomcommand, todolist, weather, nude, fact, help,mongoda
 from telegram.ext import CommandHandler, CallbackQueryHandler
 from telegram.ext import Updater
 
@@ -32,6 +32,11 @@ def main():
     weather_handler = CommandHandler('weather', weather.give_weather, pass_args=True)
     airquality_handler = CommandHandler('airquality', airquality.give_airquality, pass_args=True)
     nude_handler = CommandHandler('nude', nudeModule.get_nude, pass_args=True)
+    chatte_handler = CommandHandler('chatte', joke.get_chatte)
+    help_handler = CommandHandler('help', help.give_credits)
+    fact_handler = CommandHandler('fact', fact.give_fact)
+    citation_handler = CommandHandler('citation', fact.give_citation)
+    chienne_handler = CommandHandler('chienne', joke.get_chienne)
 
     callback_handler = CallbackQueryHandler(eat_callback)
     callback_handler_todo = CallbackQueryHandler(todo.todo_callback)

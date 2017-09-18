@@ -4,6 +4,7 @@ from math import fabs
 import re
 import time
 from icalendar import Calendar
+import urllib.request
 
 
 class RoomCommand:
@@ -15,25 +16,19 @@ class RoomCommand:
 
     def __init__(self, log, path_ics):
         self.logger = log
-        try:
-            self.file = open(path_ics, "r", -1, "iso-8859-1")
-        except IOError:
-            print("Error: ICS file does not appear to exist.")
-            return
-        self.calendar = Calendar.from_ical(self.file.read())
+        self.path_ics = path_ics
         self.lastUpdate = datetime.min
-        self.file.seek(0)
 
-    def refresh_cal(self):
-        self.logger.info("Refreshing calendar.")
-        self.calendar = Calendar.from_ical(self.file.read())
-        self.file.seek(0)
+    def __refresh_cal_if_too_old(self):
+        if datetime.utcnow() - timedelta(hours=3) > self.lastUpdate:
+            self.logger.info("Refreshing calendar.")
+            self.file = urllib.request.urlopen(self.path_ics)
+            self.calendar = Calendar.from_ical(self.file.read().decode("iso-8859-1"))
+            self.lastUpdate = datetime.utcnow()
 
     def room(self):
         self.logger.info("Give the room")
-        if datetime.utcnow() - timedelta(hours=3) > self.lastUpdate:
-            self.refresh_cal()
-            self.lastUpdate = datetime.utcnow()
+        self.__refresh_cal_if_too_old()
         min_diff = sys.maxsize
         mine = 0
         for e in self.calendar.walk('vevent'):

@@ -23,7 +23,7 @@ class RoomCommand:
         if datetime.utcnow() - timedelta(hours=3) > self.lastUpdate:
             self.logger.info("Refreshing calendar.")
             self.file = urllib.request.urlopen(self.path_ics)
-            self.calendar = Calendar.from_ical(self.file.read().decode("iso-8859-1"))
+            self.calendar = Calendar.from_ical(self.file.read().decode("utf-8"))
             self.lastUpdate = datetime.utcnow()
 
     def room(self):

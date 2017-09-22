@@ -31,7 +31,7 @@ def eat_callback(bot, update):
 
     if update.callback_query.data == "Epicéa":
         site = urllib.request.urlopen("http://www.crous-grenoble.fr/restaurant/ru-lepicea/")
-        html_text = site.read().decode('iso-8859-1')
+        html_text = site.read().decode('utf-8')
         soup = BeautifulSoup(html_text, 'html.parser')
 
         list_menu = soup.find("div", attrs={"id": "menu-repas"}).ul.children
@@ -48,7 +48,7 @@ def eat_callback(bot, update):
         list_sections = new_soup(attrs={"class": "liste-plats"})
 
         response = None
-        for item in list_sections[4]("li"):
+        for item in list_sections[2]("li"):
             if response is None:
                 response = str(item.string).capitalize()
             else:

@@ -21,7 +21,7 @@ def main():
 
     room = roomcommand.RoomCommand(loghelper.log, conf.path_ics())
     todo = todolist.Todo()
-    nudeModule = nude.Nude()
+    nudeModule = nude
 
     start_handler = CommandHandler('room', room.give_room)
     joke_handler = CommandHandler('joke', joke.give_joke)

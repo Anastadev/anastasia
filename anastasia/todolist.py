@@ -1,20 +1,19 @@
 import re
 from datetime import datetime
 
-from pymongo.errors import DuplicateKeyError
-
-from anastasia import mongoda
 from anastasia.telegramcalendar import create_calendar
 
 from anastasia.loghelper import log
+from anastasia.storage import TodoStore
+from telegram import Update
+from telegram.ext import ContextTypes
 
 
 class Todo:
     # contains the month printed by addtodo and the self.todos content
     def __init__(self):
-        log.info(mongoda.getDB())
         self.current_shown_dates = {}
-        self.todos = mongoda.getDB().todos
+        self.store = TodoStore()
 
     @staticmethod
     def usage():
@@ -22,69 +21,75 @@ class Todo:
                "/todo [-d id] delete a todo"
 
     def clean_list(self,chat_id):
-        self.todos[chat_id].remove({"date": {"$lt": datetime.now()}})
+        self.store.cleanup_expired(chat_id)
 
     def all_to_do_list(self, chat_id):
         self.clean_list(chat_id)
         st = ""
         ct = 1
-        for todo in self.todos[chat_id].find().sort("date"):
-            st += str(todo["date"].strftime("%d/%m")) + " (" + str(ct) + ") : " + todo["task"] + "\n"
+        for todo in self.store.list(chat_id):
+            st += str(todo.date.strftime("%d/%m")) + " (" + str(ct) + ") : " + todo.task + "\n"
             ct += 1
         return st
 
     def delete_todo(self, chat_id, id_todo):
-        self.todos[chat_id].remove(self.todos[chat_id].find().sort("date")[int(id_todo) - 1])
+        try:
+            idx = int(id_todo)
+        except Exception:
+            return
+        self.store.delete_by_list_index(chat_id, idx)
 
     def add_todo(self, chat_id, message_id, date, task):
-        todo = {
-            "_id" : message_id,
-            "task": task,
-            "date": date
-        }
-        id_todo = self.todos[chat_id].insert_one(todo)
-        log.info("insert id : " + str(id_todo))
+        todo = self.store.add(chat_id=chat_id, date=date, task=task)
+        log.info("insert id : " + str(todo.id))
         return todo
 
-    def give_add_todo(self, bot, update, args):
+    async def give_add_todo(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         now = datetime.now()  # Current date
+        if not update.message:
+            return
         chat_id = update.message.chat.id
         date = (now.year, now.month)
-        self.current_shown_dates[chat_id] = [date, ' '.join(args)]  # Saving the current date in a dict
+        self.current_shown_dates[chat_id] = [date, ' '.join(context.args)]  # Saving the current date in a dict
         markup = create_calendar(now.year, now.month)
-        bot.send_message(update.message.chat.id, "Choisir une date", reply_markup=markup)
+        await update.message.reply_text("Choisir une date", reply_markup=markup)
 
-    def todo_callback(self, bot, update):
+    async def todo_callback(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not update.callback_query:
+            return
         if update.callback_query.data == "next-month":
-            self.next_month(bot, update)
+            await self.next_month(update, context)
         elif update.callback_query.data == "previous-month":
-            self.previous_month(bot, update)
+            await self.previous_month(update, context)
         elif update.callback_query.data == "ignore":
-            bot.answer_callback_query(update.callback_query.id, text="")
+            await update.callback_query.answer(text="")
         else:
-            self.choose_day(bot, update)
+            await self.choose_day(update, context)
 
-    def choose_day(self, bot, update):
-        ma = re.match("calendar-day-([0-9]+)", update.callback_query.data)
+    async def choose_day(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not update.callback_query:
+            return
+        ma = re.match("calendar-day-([0-9]+)", update.callback_query.data or "")
         if ma is not None:
             chat_id = update.callback_query.message.chat.id
             date = datetime.strptime(
                 str(self.current_shown_dates[chat_id][0][0]) + str(self.current_shown_dates[chat_id][0][1]),
                 '%Y%m').replace(day=int(ma.group(1)))
-            try:
-                todo = self.add_todo(update.callback_query.message.chat_id,update.callback_query.message.message_id, date, self.current_shown_dates[chat_id][1],bot)
-            except DuplicateKeyError:
-                log.info("duplicatekey for : " + str(todo))
-                # erase calendar
-                bot.edit_message_text("todo existant",
-                                      update.callback_query.from_user.id, update.callback_query.message.message_id,
-                                      reply_markup="")
+            todo = self.add_todo(
+                update.callback_query.message.chat_id,
+                update.callback_query.message.message_id,
+                date,
+                self.current_shown_dates[chat_id][1],
+            )
             log.info("add todo : " + str(todo))
-            bot.edit_message_text(str(todo["date"].strftime("%d/%m")) + " : " + todo["task"],
-                                  update.callback_query.from_user.id, update.callback_query.message.message_id,
-                                  reply_markup="")
+            await update.callback_query.edit_message_text(
+                f"{todo.date.strftime('%d/%m')} : {todo.task}",
+                reply_markup=None,
+            )
 
-    def previous_month(self, bot, update):
+    async def previous_month(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not update.callback_query:
+            return
         chat_id = update.callback_query.message.chat.id
         saved_date = self.current_shown_dates.get(chat_id)[0]
         if saved_date is not None:
@@ -96,14 +101,15 @@ class Todo:
             date = (year, month)
             self.current_shown_dates[chat_id][0] = date
             markup = create_calendar(year, month)
-            bot.edit_message_text("Choisir une date", update.callback_query.from_user.id,
-                                  update.callback_query.message.message_id, reply_markup=markup)
-            bot.answer_callback_query(update.callback_query.id, text="")
+            await update.callback_query.edit_message_text("Choisir une date", reply_markup=markup)
+            await update.callback_query.answer(text="")
         else:
             # Do something to inform of the error
             pass
 
-    def next_month(self, bot, update):
+    async def next_month(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not update.callback_query:
+            return
         chat_id = update.callback_query.message.chat.id
         saved_date = self.current_shown_dates.get(chat_id)[0]
         if saved_date is not None:
@@ -115,20 +121,21 @@ class Todo:
             date = (year, month)
             self.current_shown_dates[chat_id][0] = date
             markup = create_calendar(year, month)
-            bot.edit_message_text("Please, choose a date", update.callback_query.from_user.id,
-                                  update.callback_query.message.message_id, reply_markup=markup)
-            bot.answer_callback_query(update.callback_query.id, text="")
+            await update.callback_query.edit_message_text("Please, choose a date", reply_markup=markup)
+            await update.callback_query.answer(text="")
         else:
             # Do something to inform of the error
             pass
 
-    def give_todo(self, bot, update, args):
-        if len(args) == 0:
+    async def give_todo(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not update.message:
+            return
+        if len(context.args) == 0:
             log.info("Give the todolist")
-            bot.sendMessage(chat_id=update.message.chat_id, text=self.all_to_do_list(update.message.chat_id))
-        elif len(args) == 2 and args[0] == "-d":
-            log.info("Delete " + args[1] + " to the todolist")
-            self.delete_todo(update.message.chat_id, args[1])
+            await update.message.reply_text(self.all_to_do_list(update.message.chat_id))
+        elif len(context.args) == 2 and context.args[0] == "-d":
+            log.info("Delete " + context.args[1] + " to the todolist")
+            self.delete_todo(update.message.chat_id, context.args[1])
         else:
             log.info("Bad format command")
-            bot.sendMessage(chat_id=update.message.chat_id, text=self.usage())
+            await update.message.reply_text(self.usage())

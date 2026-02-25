@@ -5,6 +5,9 @@ import json
 import unicodedata
 import string
 
+from telegram import Update
+from telegram.ext import ContextTypes
+
 # Adapt the google map bounds to get more stations within the air pollution API
 # This value works fine for Grenoble
 const_bounds = 0.05
@@ -93,5 +96,7 @@ def get_airquality(args):
     return airquality
 
 
-def give_airquality(bot, update, args):
-    bot.sendMessage(chat_id=update.message.chat_id, text=get_airquality(args), parse_mode="Markdown")
+async def give_airquality(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not update.message:
+        return
+    await update.message.reply_text(get_airquality(context.args), parse_mode="Markdown")

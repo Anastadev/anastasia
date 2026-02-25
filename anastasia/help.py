@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 
-def give_credits(bot, update):
-    bot.sendMessage(chat_id=update.message.chat_id,
-                    text="Je suis open source, viens m'inspecter ici : https://github.com/Anastadev/anastasia")
+from telegram import Update
+from telegram.ext import ContextTypes
+
+
+async def give_credits(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not update.message:
+        return
+    await update.message.reply_text(
+        "Je suis open source, viens m'inspecter ici : https://github.com/Anastadev/anastasia"
+    )

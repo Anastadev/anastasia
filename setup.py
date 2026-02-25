@@ -11,18 +11,17 @@ setup(
     include_package_data=True,
     url='https://github.com/Anastadev/anastasia/',
     install_requires=[
-        "python-telegram-bot",
+        "python-telegram-bot>=22,<23",
         "icalendar",
         "beautifulsoup4",
         "requests",
-        "pymongo", 'bs4',
-        "configparser"
+        "bs4",
     ],
     classifiers=[
         "Programming Language :: Python",
         "Natural Language :: French",
         'License :: OSI Approved :: GNU General Public License v2 (GPLv2)',
-        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.10",
         "Topic :: Utilities"
     ],
     entry_points={

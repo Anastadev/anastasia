@@ -3,6 +3,9 @@ import requests
 import re
 from bs4 import BeautifulSoup
 
+from telegram import Update
+from telegram.ext import ContextTypes
+
 def retrieve_citation():
     site = requests.get("https://www.fortunes-fr.org/fortunes.php")
     html = site.content
@@ -15,8 +18,10 @@ def retrieve_citation():
     return cita
 
 
-def give_citation(bot, update):
-    bot.sendMessage(chat_id=update.message.chat_id, text=retrieve_citation())
+async def give_citation(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not update.message:
+        return
+    await update.message.reply_text(retrieve_citation())
 
 
 def retrieve_fact():
@@ -31,6 +36,8 @@ def retrieve_fact():
     return fact
 
 
-def give_fact(bot, update):
-    bot.sendMessage(chat_id=update.message.chat_id, text=retrieve_fact())
+async def give_fact(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not update.message:
+        return
+    await update.message.reply_text(retrieve_fact())
 

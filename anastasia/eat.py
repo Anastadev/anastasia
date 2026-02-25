@@ -1,23 +1,27 @@
 import requests
-import telegram
 import urllib.request
 import re
 from bs4 import BeautifulSoup
 import time
 import html
 
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram.ext import ContextTypes
 
-def new_eat(bot, update):
-    custom_keyboard = [[telegram.InlineKeyboardButton("Diderot", callback_data="Diderot"),
-                        telegram.InlineKeyboardButton("Epicéa", callback_data="Epicéa"),
-                        telegram.InlineKeyboardButton("Barnave", callback_data="Barnave")]]
-    reply_markup = telegram.InlineKeyboardMarkup(custom_keyboard)
-    bot.sendMessage(chat_id=update.message.chat_id, text="De quel restaurant veux-tu le menu ?",
-                    reply_markup=reply_markup)
+async def new_eat(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not update.message:
+        return
+    custom_keyboard = [[
+        InlineKeyboardButton("Diderot", callback_data="Diderot"),
+        InlineKeyboardButton("Epicéa", callback_data="Epicéa"),
+        InlineKeyboardButton("Barnave", callback_data="Barnave"),
+    ]]
+    reply_markup = InlineKeyboardMarkup(custom_keyboard)
+    await update.message.reply_text("De quel restaurant veux-tu le menu ?", reply_markup=reply_markup)
 
 
-def eat_callback(bot, update):
-    def answer(r, s, resto, sub_regex):
+async def eat_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    async def answer(r, s, resto, sub_regex):
         reply = "Il n'y a rien à manger aujourd'hui !"
         res = r.search(s.text)
         if res is not None:
@@ -26,8 +30,11 @@ def eat_callback(bot, update):
             res2 = r.findall(html.unescape(text))
             reply = ", ".join([text.capitalize() for text in res2])
         reply = resto + ": " + reply
-        bot.sendMessage(chat_id=update.callback_query.message.chat.id, text=reply)
-        update.callback_query.answer()
+        await update.callback_query.message.reply_text(text=reply)
+        await update.callback_query.answer()
+
+    if not update.callback_query:
+        return
 
     if update.callback_query.data == "Epicéa":
         site = urllib.request.urlopen("http://www.crous-grenoble.fr/restaurant/ru-lepicea/")
@@ -55,26 +62,26 @@ def eat_callback(bot, update):
                 response = response + ", " + str(item.string).capitalize()
 
         if response is None:
-            bot.sendMessage(chat_id=update.callback_query.message.chat.id, text="Il n'y a rien à manger aujourd'hui !")
-            update.callback_query.answer()
+            await update.callback_query.message.reply_text("Il n'y a rien à manger aujourd'hui !")
+            await update.callback_query.answer()
         else:
-            bot.sendMessage(chat_id=update.callback_query.message.chat.id, text="Epicea: " + response)
-            update.callback_query.answer()
+            await update.callback_query.message.reply_text("Epicea: " + response)
+            await update.callback_query.answer()
 
     elif update.callback_query.data == "Diderot":
         site = requests.get("http://www.crous-grenoble.fr/restaurant/ru-diderot-traditionnel/")
         regex = re.compile(r"(<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
             "%d"))) + ".*(?:(?:\n.*?)*?(?:</span></div></div></div>)){1,2})", re.MULTILINE)
-        answer(regex, site, "Diderot", r"<li>(.*?)</li>")
+        await answer(regex, site, "Diderot", r"<li>(.*?)</li>")
 
     elif update.callback_query.data == "Barnave":
         site = requests.get("http://www.crous-grenoble.fr/restaurant/ru-barnave/")
         regex = re.compile(r"(<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
             "%d"))) + ".*(?:\n.*?)*?Déjeuner.*?<\/div>)", re.MULTILINE)
-        answer(regex, site, "Barnave", r".*?(?:(?:Déjeuner.*?|<\/ul>)<span.*?>|<li>)(.*?)(?:<\/span>|<\/li>)")
+        await answer(regex, site, "Barnave", r".*?(?:(?:Déjeuner.*?|<\/ul>)<span.*?>|<li>)(.*?)(?:<\/span>|<\/li>)")
 
 
-def eat(bot, update):
+async def eat(update: Update, context: ContextTypes.DEFAULT_TYPE):
     response = "Il n'y a rien à manger aujourd'hui !"
     r = requests.get("http://www.crous-grenoble.fr/restaurant/ru-diderot-traditionnel/")
     regex = re.compile(r"(<h3>Menu[a-zA-Z ]*" + str(int(time.strftime(
@@ -85,4 +92,5 @@ def eat(bot, update):
         regex = re.compile(r"<li>(.*?)</li>", re.MULTILINE)
         res2 = regex.findall(text)
         response = ",".join(res2)
-    bot.sendMessage(chat_id=update.message.chat_id, text=response)
+    if update.message:
+        await update.message.reply_text(text=response)

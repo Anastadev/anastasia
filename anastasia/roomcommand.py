@@ -6,6 +6,9 @@ import time
 from icalendar import Calendar
 import urllib.request
 
+from telegram import Update
+from telegram.ext import ContextTypes
+
 
 class RoomCommand:
     lastUpdate = datetime.min
@@ -45,5 +48,7 @@ class RoomCommand:
             location = location[:4]
         return mine["SUMMARY"] + "\n" + location + "\n" + self.utc_to_local(mine["DTSTART"].dt).strftime("%A %H:%M").capitalize()
 
-    def give_room(self, bot, update):
-        bot.sendMessage(chat_id=update.message.chat_id, text=(self.room()))
+    async def give_room(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        if not update.message:
+            return
+        await update.message.reply_text(self.room())

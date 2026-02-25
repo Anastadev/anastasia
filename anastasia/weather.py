@@ -2,6 +2,9 @@
 import urllib.request
 import json
 
+from telegram import Update
+from telegram.ext import ContextTypes
+
 
 def get_weather(args):
     if len(args) == 0 or len(args) > 1:
@@ -23,5 +26,7 @@ def get_weather(args):
 
     return weather
 
-def give_weather(bot, update, args):
-    bot.sendMessage(chat_id=update.message.chat_id, text=get_weather(args),parse_mode="Markdown")
+async def give_weather(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not update.message:
+        return
+    await update.message.reply_text(get_weather(context.args), parse_mode="Markdown")
